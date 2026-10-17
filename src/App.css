@@ -603,6 +603,14 @@ body.dream-mode-active .character-section {
   grid-template-columns: 0.9fr 1.1fr;
   gap: 3.5rem;
   align-items: start;
+  min-width: 0;
+  width: 100%;
+}
+
+.portrait-column,
+.traits-column {
+  min-width: 0;
+  width: 100%;
 }
 
 .portrait-card {
@@ -612,6 +620,8 @@ body.dream-mode-active .character-section {
   padding: 1.5rem;
   box-shadow: var(--shadow-md);
   text-align: center;
+  min-width: 0;
+  width: 100%;
 }
 
 .portrait-inner {
@@ -673,6 +683,8 @@ body.dream-mode-active .portrait-role {
   grid-template-columns: 1fr 1fr;
   gap: 1.5rem;
   margin-bottom: 2rem;
+  min-width: 0;
+  width: 100%;
 }
 
 .trait-card {
@@ -682,6 +694,10 @@ body.dream-mode-active .portrait-role {
   padding: 1.5rem;
   box-shadow: var(--shadow-sm);
   transition: transform 0.25s ease, box-shadow 0.25s ease;
+  min-width: 0;
+  width: 100%;
+  overflow-wrap: break-word;
+  word-wrap: break-word;
 }
 
 .trait-card:hover {
@@ -1677,6 +1693,436 @@ body.dream-mode-active .feedback-warning {
 }
 
 /* --------------------------------------------------------------------------
+   Constellation Telescope Navigation & Waypoint Story Slide
+   -------------------------------------------------------------------------- */
+.star-active-story-ring {
+  animation: rotateFocus 10s linear infinite;
+  transform-origin: 0 0;
+}
+
+.story-focused-label {
+  fill: #ffffff !important;
+  font-weight: 800;
+}
+
+.constellation-nav-bar {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.35rem 0.2rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.25rem;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.constellation-nav-bar::-webkit-scrollbar {
+  display: none;
+}
+
+.constellation-nav-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.85rem;
+  min-height: 44px;
+  background-color: var(--bg-card);
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  white-space: nowrap;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+body.dream-mode-active .constellation-nav-btn {
+  background-color: var(--midnight-soft);
+  color: var(--cream);
+  border-color: var(--border-soft);
+}
+
+.constellation-nav-btn:hover {
+  border-color: var(--berry);
+  color: var(--berry);
+  transform: translateY(-1px);
+}
+
+body.dream-mode-active .constellation-nav-btn:hover {
+  border-color: var(--dream-gold);
+  color: var(--dream-gold);
+}
+
+.constellation-nav-btn.active {
+  background: linear-gradient(135deg, var(--berry), var(--berry-dark));
+  color: #ffffff;
+  border-color: var(--berry);
+  box-shadow: 0 3px 10px rgba(163, 64, 99, 0.3);
+}
+
+body.dream-mode-active .constellation-nav-btn.active {
+  background: linear-gradient(135deg, var(--berry), var(--midnight));
+  border-color: var(--dream-gold);
+  color: var(--dream-gold);
+}
+
+.constellation-nav-btn.charted {
+  border-color: var(--dream-gold);
+}
+
+.constellation-nav-btn.charted .nav-btn-icon {
+  color: var(--dream-gold);
+}
+
+.constellation-nav-btn.next-target:not(.active) {
+  border-color: var(--berry);
+  background-color: var(--blush);
+  color: var(--berry);
+}
+
+body.dream-mode-active .constellation-nav-btn.next-target:not(.active) {
+  background-color: rgba(163, 64, 99, 0.3);
+  color: var(--blush);
+}
+
+.nav-btn-order {
+  font-size: 0.7rem;
+  opacity: 0.75;
+}
+
+.nav-btn-icon {
+  font-size: 0.9rem;
+}
+
+/* Constellation Story Slide */
+.constellation-story-slide {
+  background-color: var(--bg-card);
+  border: 1.5px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  box-shadow: var(--shadow-sm);
+  scroll-margin-top: 90px;
+  transition: border-color 0.25s ease, background-color 0.25s ease;
+}
+
+body.dream-mode-active .constellation-story-slide {
+  background-color: var(--midnight-soft);
+  color: #fff8f1;
+}
+
+.constellation-story-slide.slide-charted {
+  border-color: var(--dream-gold);
+  background: linear-gradient(180deg, var(--bg-card) 0%, var(--dream-gold-soft) 100%);
+}
+
+body.dream-mode-active .constellation-story-slide.slide-charted {
+  background: linear-gradient(180deg, var(--midnight-soft) 0%, rgba(243, 201, 107, 0.1) 100%);
+}
+
+.slide-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  padding-bottom: 0.65rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.slide-progress {
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--berry);
+}
+
+body.dream-mode-active .slide-progress {
+  color: var(--dream-gold);
+}
+
+.slide-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.2rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+.slide-status-badge.charted {
+  background-color: var(--dream-gold-soft);
+  color: var(--cocoa);
+  border: 1px solid var(--border-gold);
+}
+
+body.dream-mode-active .slide-status-badge.charted {
+  background-color: rgba(243, 201, 107, 0.2);
+  color: var(--dream-gold);
+}
+
+.slide-status-badge.next {
+  background-color: var(--blush);
+  color: var(--berry);
+  border: 1px solid var(--border-accent);
+}
+
+body.dream-mode-active .slide-status-badge.next {
+  background-color: rgba(163, 64, 99, 0.35);
+  color: var(--blush);
+}
+
+.slide-status-badge.pending {
+  background-color: var(--bg-card-subtle);
+  color: var(--text-muted);
+  border: 1px solid var(--border-soft);
+}
+
+body.dream-mode-active .slide-status-badge.pending {
+  background-color: var(--midnight);
+  color: var(--text-muted);
+}
+
+.slide-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.slide-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.slide-location-icon {
+  font-size: 1.6rem;
+  line-height: 1;
+}
+
+.slide-title-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-title {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--text-heading);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.slide-meta {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  margin-top: 0.15rem;
+}
+
+.slide-role {
+  color: var(--berry);
+  font-weight: 700;
+}
+
+body.dream-mode-active .slide-role {
+  color: var(--dream-gold);
+}
+
+.slide-story-text {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--text-main);
+  margin: 0.25rem 0;
+}
+
+.slide-note-box {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+  background-color: rgba(243, 201, 107, 0.15);
+  border-left: 3px solid var(--dream-gold);
+  border-radius: var(--radius-sm);
+  padding: 0.55rem 0.75rem;
+  font-size: 0.8rem;
+  color: var(--cocoa);
+  line-height: 1.45;
+}
+
+body.dream-mode-active .slide-note-box {
+  background-color: rgba(243, 201, 107, 0.1);
+  color: var(--cream);
+}
+
+.slide-note-star {
+  color: var(--dream-gold-dark);
+  font-size: 0.9rem;
+  line-height: 1;
+}
+
+body.dream-mode-active .slide-note-star {
+  color: var(--dream-gold);
+}
+
+.slide-action-box {
+  margin-top: 0.25rem;
+}
+
+.btn-chart-waypoint {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.65rem 1rem;
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.85rem;
+  min-height: 44px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-chart-ready {
+  background: linear-gradient(135deg, var(--berry), var(--berry-dark));
+  color: #ffffff;
+  border: 1.5px solid var(--berry);
+  box-shadow: 0 3px 12px rgba(163, 64, 99, 0.3);
+}
+
+.btn-chart-ready:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(163, 64, 99, 0.4);
+}
+
+.btn-chart-locked {
+  background-color: var(--bg-card-subtle);
+  color: var(--text-muted);
+  border: 1.5px dashed var(--border-soft);
+}
+
+body.dream-mode-active .btn-chart-locked {
+  background-color: var(--midnight);
+  color: var(--text-muted);
+}
+
+.btn-chart-locked:hover {
+  border-color: var(--berry);
+  color: var(--text-heading);
+}
+
+/* Slide Navigation Buttons: Prev / Next */
+.slide-nav-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid var(--border-soft);
+}
+
+.btn-slide-nav {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  padding: 0.55rem 1.1rem;
+  min-height: 44px;
+  background-color: var(--bg-card);
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-full);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+body.dream-mode-active .btn-slide-nav {
+  background-color: var(--midnight-soft);
+  color: var(--cream);
+}
+
+.btn-slide-nav:hover:not(:disabled) {
+  border-color: var(--berry);
+  color: var(--berry);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+body.dream-mode-active .btn-slide-nav:hover:not(:disabled) {
+  border-color: var(--dream-gold);
+  color: var(--dream-gold);
+}
+
+.btn-slide-nav:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-reset-slide {
+  background: linear-gradient(135deg, var(--dream-gold), var(--dream-gold-dark));
+  color: var(--midnight);
+  border: none;
+  font-weight: 800;
+}
+
+.btn-reset-slide:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(243, 201, 107, 0.4);
+}
+
+.slide-counter-indicator {
+  font-size: 0.82rem;
+  font-weight: 800;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.counter-current {
+  color: var(--berry);
+  font-size: 0.95rem;
+}
+
+body.dream-mode-active .counter-current {
+  color: var(--dream-gold);
+}
+
+@media (max-width: 480px) {
+  .constellation-story-slide {
+    padding: 1rem;
+  }
+
+  .slide-title {
+    font-size: 1.1rem;
+  }
+
+  .btn-slide-nav {
+    padding: 0.5rem 0.85rem;
+    font-size: 0.78rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
    Lullaby Lab Web Audio Widget
    -------------------------------------------------------------------------- */
 .lullaby-interactive-widget {
@@ -2561,6 +3007,12 @@ body.dream-mode-active .secret-recipe-card {
   .secret-modal-dialog,
   .secret-recipe-card {
     animation: none;
+  }
+
+  .star-active-story-ring,
+  .star-pulse-ring,
+  .star-focus-ring {
+    animation: none !important;
   }
 }
 

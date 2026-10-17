@@ -1,24 +1,104 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 
 const STARS = [
-  { id: 0, order: 1, name: 'Observatory Peak', x: 60, y: 70, role: 'Base Station' },
-  { id: 1, order: 2, name: 'North Moonbeam', x: 200, y: 55, role: 'High Navigation Lantern' },
-  { id: 2, order: 3, name: 'Badger Hollow', x: 330, y: 120, role: 'Nocturnal Waypoint' },
-  { id: 3, order: 4, name: 'Owl Perch', x: 250, y: 220, role: 'Breeze Guidance Node' },
-  { id: 4, order: 5, name: 'Cradle of Dreams', x: 100, y: 200, role: 'Safe Slumber Haven' },
+  {
+    id: 0,
+    order: 1,
+    name: 'Observatory Peak',
+    x: 60,
+    y: 70,
+    role: 'Base Station',
+    icon: '🔭',
+    altitude: '40,000 ft · Cloud 9 Summit',
+    story:
+      'High above the clouds in the clock tower dome, Pip loads the wooden skiff with spun stardust vials and freshly steamed chamomile tea. The brass astrolabe points true north, waiting for the first night breeze to lift the sails.',
+    waypointNote: 'Departure launchpad for all 18 bedtime flight paths.',
+  },
+  {
+    id: 1,
+    order: 2,
+    name: 'North Moonbeam',
+    x: 200,
+    y: 55,
+    role: 'High Navigation Lantern',
+    icon: '🌙',
+    altitude: '34,000 ft · Lunar Corridor',
+    story:
+      'A brilliant shaft of pale lunar glow cuts through the silver fog. Pip aligns the skiff’s copper compass here, catching the steady thermal current that keeps the sleeping skyway calm and undisturbed.',
+    waypointNote: 'Guides the skiff safely past cumulus cloudbanks.',
+  },
+  {
+    id: 2,
+    order: 3,
+    name: 'Badger Hollow',
+    x: 330,
+    y: 120,
+    role: 'Nocturnal Waypoint',
+    icon: '🦡',
+    altitude: '18,000 ft · Forest Tree-line',
+    story:
+      'Descending toward the sleepy forest canopy, Pip drops off a warm lavender-scented nightlight above the old oak roots where the badger kits are already yawning and nestling into moss.',
+    waypointNote: 'First low-altitude dream delivery station.',
+  },
+  {
+    id: 3,
+    order: 4,
+    name: 'Owl Perch',
+    x: 250,
+    y: 220,
+    role: 'Breeze Guidance Node',
+    icon: '🦉',
+    altitude: '12,000 ft · Whispering Pines',
+    story:
+      'The Midnight Nursery Elder Owls blink with gentle approval as Pip glides past the pine branches. They signal favorable tailwinds and whisper tonight’s final bedtime coordinates.',
+    waypointNote: 'Weather station and zephyr flight clearance.',
+  },
+  {
+    id: 4,
+    order: 5,
+    name: 'Cradle of Dreams',
+    x: 100,
+    y: 200,
+    role: 'Safe Slumber Haven',
+    icon: '☁️',
+    altitude: '6,000 ft · Valley of Sleep',
+    story:
+      'The final and coziest sanctuary in the valley. Pip releases the remaining sparks of sweet dreams over the sleepy creatures, ensuring 8 hours of velvet-soft, peaceful rest before returning to Cloud 9.',
+    waypointNote: 'The grand harbor where all nightly lullabies resolve.',
+  },
 ];
 
 export default function ConstellationTelescope({ onConstellationComplete }) {
   const [selectedStars, setSelectedStars] = useState([]);
+  const [activeStarIndex, setActiveStarIndex] = useState(0);
   const [feedback, setFeedback] = useState({
     text: 'Click or press Enter on Star 1 (Observatory Peak) to begin charting tonight’s route.',
     type: 'info',
   });
   const [isCompleted, setIsCompleted] = useState(false);
+  const slideRef = useRef(null);
 
   const nextExpectedOrder = selectedStars.length + 1;
+  const currentStar = STARS[activeStarIndex] || STARS[0];
+  const isCurrentCharted = selectedStars.includes(currentStar.id);
+  const isCurrentNext = currentStar.order === nextExpectedOrder && !isCompleted;
+
+  const scrollToSlide = () => {
+    if (typeof window !== 'undefined' && window.innerWidth < 768 && slideRef.current) {
+      const navOffset = 85;
+      const rect = slideRef.current.getBoundingClientRect();
+      const targetY = rect.top + window.scrollY - navOffset;
+      const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      window.scrollTo({
+        top: Math.max(0, targetY),
+        behavior: prefersReduced ? 'auto' : 'smooth',
+      });
+    }
+  };
 
   const handleStarSelect = (star) => {
+    setActiveStarIndex(star.id);
+
     if (isCompleted) {
       setFeedback({
         text: 'The Slumber Skiff constellation is complete! Click Reset to re-align.',
@@ -68,16 +148,34 @@ export default function ConstellationTelescope({ onConstellationComplete }) {
     }
   };
 
+  const handleSvgStarClick = (star) => {
+    handleStarSelect(star);
+    scrollToSlide();
+  };
+
+  const handleNavStarClick = (star, idx) => {
+    setActiveStarIndex(idx);
+    scrollToSlide();
+  };
+
   const handleKeyDown = (e, star) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
-      handleStarSelect(star);
+      handleSvgStarClick(star);
+    }
+  };
+
+  const goToSlide = (idx) => {
+    if (idx >= 0 && idx < STARS.length) {
+      setActiveStarIndex(idx);
+      scrollToSlide();
     }
   };
 
   const handleReset = () => {
     setSelectedStars([]);
     setIsCompleted(false);
+    setActiveStarIndex(0);
     setFeedback({
       text: 'Telescope re-aligned! Select Star 1 (Observatory Peak) to chart the route anew.',
       type: 'info',
@@ -204,6 +302,7 @@ export default function ConstellationTelescope({ onConstellationComplete }) {
           {STARS.map((star) => {
             const isSelected = selectedStars.includes(star.id);
             const isNext = star.order === nextExpectedOrder && !isCompleted;
+            const isFocusedInStory = activeStarIndex === star.id;
 
             return (
               <g
@@ -212,9 +311,9 @@ export default function ConstellationTelescope({ onConstellationComplete }) {
                 tabIndex={0}
                 aria-label={`Star ${star.order}: ${star.name}. ${isSelected ? 'Connected' : isNext ? 'Next target' : 'Pending'}`}
                 aria-pressed={isSelected}
-                className={`star-node-group ${isSelected ? 'selected' : ''} ${isNext ? 'pulse-next' : ''}`}
+                className={`star-node-group ${isSelected ? 'selected' : ''} ${isNext ? 'pulse-next' : ''} ${isFocusedInStory ? 'story-active' : ''}`}
                 transform={`translate(${star.x}, ${star.y})`}
-                onClick={() => handleStarSelect(star)}
+                onClick={() => handleSvgStarClick(star)}
                 onKeyDown={(e) => handleKeyDown(e, star)}
               >
                 {/* Generous invisible hit target circle (44x44px accessible touch area) */}
@@ -231,6 +330,18 @@ export default function ConstellationTelescope({ onConstellationComplete }) {
                     stroke="#f3c96b"
                     strokeWidth="1.5"
                     className="star-pulse-ring"
+                  />
+                )}
+
+                {/* Active story focus ring indicator */}
+                {isFocusedInStory && (
+                  <circle
+                    r="13"
+                    fill="none"
+                    stroke="#f4d6d7"
+                    strokeWidth="1.5"
+                    strokeDasharray="2,2"
+                    className="star-active-story-ring"
                   />
                 )}
 
@@ -256,7 +367,7 @@ export default function ConstellationTelescope({ onConstellationComplete }) {
                 <text
                   y={star.y > 180 ? -12 : 20}
                   textAnchor="middle"
-                  className={`star-label ${isSelected ? 'active-label' : ''}`}
+                  className={`star-label ${isSelected ? 'active-label' : ''} ${isFocusedInStory ? 'story-focused-label' : ''}`}
                 >
                   {star.order}. {star.name}
                 </text>
@@ -278,6 +389,155 @@ export default function ConstellationTelescope({ onConstellationComplete }) {
             </div>
           </div>
         )}
+      </div>
+
+      {/* Constellation Waypoint Quick-Jump Navigation Bar */}
+      <div
+        className="constellation-nav-bar"
+        role="tablist"
+        aria-label="Constellation waypoint star chapters"
+      >
+        {STARS.map((star, idx) => {
+          const isCharted = selectedStars.includes(star.id);
+          const isActive = activeStarIndex === idx;
+          const isNextTarget = star.order === nextExpectedOrder && !isCompleted;
+
+          return (
+            <button
+              key={star.id}
+              type="button"
+              role="tab"
+              id={`star-tab-${star.id}`}
+              aria-selected={isActive}
+              aria-controls={`star-slide-${star.id}`}
+              className={`constellation-nav-btn ${isActive ? 'active' : ''} ${isCharted ? 'charted' : ''} ${isNextTarget ? 'next-target' : ''}`}
+              onClick={() => handleNavStarClick(star, idx)}
+            >
+              <span className="nav-btn-order">{star.order}</span>
+              <span className="nav-btn-icon" aria-hidden="true">
+                {isCharted ? '★' : star.icon}
+              </span>
+              <span className="nav-btn-name">{star.name}</span>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Interactive Mobile & Desktop Waypoint Story Slide */}
+      <div
+        ref={slideRef}
+        id={`star-slide-${currentStar.id}`}
+        role="tabpanel"
+        aria-labelledby={`star-tab-${currentStar.id}`}
+        className={`constellation-story-slide ${isCurrentCharted ? 'slide-charted' : ''}`}
+      >
+        <div className="slide-header">
+          <div className="slide-progress">
+            <span>Star {currentStar.order} of {STARS.length}</span>
+          </div>
+
+          <div className="slide-badge-wrap">
+            {isCurrentCharted ? (
+              <span className="slide-status-badge charted">
+                <span aria-hidden="true">✦</span> Connected to Skyway
+              </span>
+            ) : isCurrentNext ? (
+              <span className="slide-status-badge next">
+                <span aria-hidden="true">★</span> Next Target to Chart
+              </span>
+            ) : (
+              <span className="slide-status-badge pending">
+                <span aria-hidden="true">✧</span> Waypoint {currentStar.order}
+              </span>
+            )}
+          </div>
+        </div>
+
+        <div className="slide-body">
+          <div className="slide-title-row">
+            <span className="slide-location-icon" aria-hidden="true">
+              {currentStar.icon}
+            </span>
+            <div className="slide-title-group">
+              <h5 className="slide-title">{currentStar.name}</h5>
+              <div className="slide-meta">
+                <span className="slide-role">{currentStar.role}</span>
+                <span className="slide-meta-divider" aria-hidden="true">·</span>
+                <span className="slide-altitude">{currentStar.altitude}</span>
+              </div>
+            </div>
+          </div>
+
+          <p className="slide-story-text">&ldquo;{currentStar.story}&rdquo;</p>
+
+          <div className="slide-note-box">
+            <span className="slide-note-star" aria-hidden="true">✦</span>
+            <span className="slide-note-text">
+              <strong>Skyway Dispatch:</strong> {currentStar.waypointNote}
+            </span>
+          </div>
+        </div>
+
+        {/* Quick Connect Action Button on Slide */}
+        {!isCompleted && !isCurrentCharted && (
+          <div className="slide-action-box">
+            <button
+              type="button"
+              className={`btn-chart-waypoint ${isCurrentNext ? 'btn-chart-ready' : 'btn-chart-locked'}`}
+              onClick={() => handleStarSelect(currentStar)}
+              aria-label={`Connect Star ${currentStar.order} (${currentStar.name}) to flight corridor`}
+            >
+              <span>
+                {isCurrentNext
+                  ? `✦ Connect Star ${currentStar.order} to Skyway Corridor`
+                  : `Connect Star ${currentStar.order} (Next expected: Star ${nextExpectedOrder})`}
+              </span>
+            </button>
+          </div>
+        )}
+
+        {/* Slide Navigation: Previous / Next & Step Indicator */}
+        <div className="slide-nav-controls">
+          <button
+            type="button"
+            className="btn-slide-nav btn-prev-star"
+            onClick={() => goToSlide(activeStarIndex - 1)}
+            disabled={activeStarIndex === 0}
+            aria-label="Go to previous star story slide"
+          >
+            <span aria-hidden="true">←</span>
+            <span>Previous Star</span>
+          </button>
+
+          <div className="slide-counter-indicator" aria-live="polite">
+            <span className="counter-current">{activeStarIndex + 1}</span>
+            <span className="counter-slash">/</span>
+            <span className="counter-total">{STARS.length}</span>
+          </div>
+
+          {isCompleted && activeStarIndex === STARS.length - 1 ? (
+            <button
+              type="button"
+              className="btn-slide-nav btn-reset-slide"
+              onClick={handleReset}
+              aria-label="Constellation complete, reset and chart anew"
+            >
+              <span aria-hidden="true">↺</span>
+              <span>Chart Anew</span>
+            </button>
+          ) : (
+            <button
+              type="button"
+              className="btn-slide-nav btn-next-star"
+              onClick={() => goToSlide(activeStarIndex + 1)}
+              disabled={activeStarIndex === STARS.length - 1}
+              aria-label="Go to next star story slide"
+            >
+              <span>Next Star</span>
+              <span aria-hidden="true">→</span>
+            </button>
+          )}
+        </div>
       </div>
 
       {/* Live Status and Controls */}
