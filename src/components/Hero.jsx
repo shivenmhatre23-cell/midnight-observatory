@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function Hero({ dreamModeActive = false }) {
   const heroImageSrc = dreamModeActive
-    ? `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.png`
+    ? `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.jpg`
     : `${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`;
 
   return (

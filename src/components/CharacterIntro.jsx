@@ -2,7 +2,7 @@ import React from 'react';
 
 export default function CharacterIntro({ dreamModeActive = false }) {
   const portraitSrc = dreamModeActive
-    ? `${import.meta.env.BASE_URL}images/pip_portrait_dream_mode.png`
+    ? `${import.meta.env.BASE_URL}images/pip_portrait_dream_mode.jpg`
     : `${import.meta.env.BASE_URL}images/pip_portrait.png`;
 
   const traits = [
