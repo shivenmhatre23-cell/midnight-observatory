@@ -134,7 +134,7 @@ export default function SecretObservatoryModal({ isOpen, onClose, triggerRef, on
           <div className="secret-hero-row">
             <div className="secret-avatar-box">
               <img
-                src="/images/pip_avatar_cloud.png"
+                src={`${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`}
                 alt="Pip dozing warmly on a cloud pillow in the secret loft"
                 className="secret-pip-img"
                 width="140"

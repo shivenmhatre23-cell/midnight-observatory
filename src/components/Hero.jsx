@@ -63,7 +63,7 @@ export default function Hero() {
 
           <div className="character-frame">
             <img
-              src="/images/pip_avatar_cloud.png"
+              src={`${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`}
               alt="Pip the sleepy Skull Baby resting gently atop a fluffy dream cloud"
               className="character-image"
               width="500"

@@ -49,7 +49,7 @@ export default function CharacterIntro() {
             <div className="portrait-card">
               <div className="portrait-inner">
                 <img
-                  src="/images/pip_portrait.png"
+                  src={`${import.meta.env.BASE_URL}images/pip_portrait.png`}
                   alt="Official studio portrait of Pip the Skull Baby wearing a dreamy nightcap"
                   className="portrait-img"
                   width="440"
