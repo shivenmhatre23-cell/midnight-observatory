@@ -1,10 +1,21 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
+import SecretObservatoryModal from './SecretObservatoryModal';
 
-export default function Footer() {
+export default function Footer({ onEasterEggDiscovered }) {
   const [easterEggFound, setEasterEggFound] = useState(false);
+  const [isLoftOpen, setIsLoftOpen] = useState(false);
+  const triggerRef = useRef(null);
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleOpenSecret = () => {
+    setIsLoftOpen(true);
+    setEasterEggFound(true);
+    if (onEasterEggDiscovered) {
+      onEasterEggDiscovered();
+    }
   };
 
   return (
@@ -35,28 +46,37 @@ export default function Footer() {
           <button
             type="button"
             className="secret-star-btn"
-            onClick={() => setEasterEggFound(!easterEggFound)}
-            aria-label="Observatory secret hint"
+            ref={triggerRef}
+            onClick={handleOpenSecret}
+            aria-label="Unlock Pip's Secret Observatory Loft"
           >
             <span className="secret-moon-icon" aria-hidden="true">🔭</span>
-            <span className="secret-lead">Observatory Secret Discovered?</span>
+            <span className="secret-lead">
+              {easterEggFound ? 'Re-enter Pip’s Secret Loft' : 'Observatory Secret Discovered?'}
+            </span>
           </button>
           
           <p className="secret-text">
             {easterEggFound ? (
               <span className="easter-egg-revealed">
-                🌟 <em>You found the hidden note!</em> Legend whispers that in <strong>Phase 2</strong>, 
-                aligning three moonstones atop the observatory unlocks the <strong>Celestial Dream Weaver</strong>—an 
-                interactive synthesizer where visitors can compose custom starry lullabies for Pip to deliver!
+                🌟 <em>Secret Room Unlocked!</em> You discovered Pip’s hidden loft above Cloud 9.
+                Click the telescope button anytime to visit Pip’s stargazing nook!
               </span>
             ) : (
               <span>
-                Psst... The brass telescope atop the observatory holds a hidden mechanism. 
-                Keep your ears open for the midnight chime in Phase 2! (Click telescope above to peek)
+                Psst... The brass telescope atop the observatory holds a hidden secret mechanism. 
+                Click the telescope button above to peek inside the secret loft!
               </span>
             )}
           </p>
         </div>
+
+        {/* Secret Observatory Accessible Dialog */}
+        <SecretObservatoryModal
+          isOpen={isLoftOpen}
+          onClose={() => setIsLoftOpen(false)}
+          triggerRef={triggerRef}
+        />
 
         {/* Main Footer Info */}
         <div className="footer-content">

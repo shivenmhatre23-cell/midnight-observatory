@@ -2173,3 +2173,321 @@ body.dream-mode-active .whisper-tag {
     min-width: 22px;
   }
 }
+
+/* --------------------------------------------------------------------------
+   Secret Observatory Loft Modal (Phase 3 Easter Egg)
+   -------------------------------------------------------------------------- */
+.secret-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  background-color: rgba(18, 20, 34, 0.82);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  animation: backdropFade 0.3s ease-out;
+}
+
+@keyframes backdropFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.secret-modal-dialog {
+  background-color: var(--cream);
+  border: 2px solid var(--border-gold);
+  border-radius: var(--radius-lg);
+  max-width: 580px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), 0 0 40px rgba(243, 201, 107, 0.25);
+  animation: loftSlideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  display: flex;
+  flex-direction: column;
+}
+
+body.dream-mode-active .secret-modal-dialog {
+  background-color: var(--midnight);
+  color: #fff8f1;
+}
+
+@keyframes loftSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.secret-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.secret-dialog-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  background-color: var(--blush);
+  color: var(--berry);
+  padding: 0.3rem 0.85rem;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+body.dream-mode-active .secret-dialog-badge {
+  background-color: rgba(163, 64, 99, 0.35);
+  color: var(--blush);
+}
+
+.secret-modal-close {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  border: 1px solid var(--border-soft);
+  background-color: var(--bg-card);
+  color: var(--text-heading);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.secret-modal-close:hover {
+  background-color: var(--berry);
+  color: #ffffff;
+  border-color: var(--berry);
+  transform: rotate(90deg);
+}
+
+.secret-modal-close:focus-visible {
+  outline: 2px solid var(--berry);
+  outline-offset: 2px;
+}
+
+.secret-modal-body {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.secret-hero-row {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.secret-avatar-box {
+  width: 130px;
+  flex-shrink: 0;
+  background: radial-gradient(circle, rgba(243, 201, 107, 0.35), rgba(244, 214, 215, 0.15));
+  border-radius: var(--radius-md);
+  padding: 0.5rem;
+  border: 1px solid var(--border-gold);
+}
+
+.secret-pip-img {
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.15));
+}
+
+.secret-welcome-text {
+  flex: 1;
+}
+
+.secret-dialog-title {
+  font-family: var(--font-serif);
+  font-size: 1.6rem;
+  color: var(--text-heading);
+  margin-bottom: 0.5rem;
+}
+
+.secret-dialog-desc {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+  font-style: italic;
+  font-family: var(--font-serif);
+  margin: 0;
+}
+
+.secret-interactive-box {
+  background-color: var(--bg-card-subtle);
+  border: 1.5px dashed var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 1.35rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+body.dream-mode-active .secret-interactive-box {
+  background-color: rgba(34, 38, 63, 0.7);
+}
+
+.secret-surprise-title {
+  font-family: var(--font-serif);
+  font-size: 1.1rem;
+  color: var(--text-heading);
+  margin-bottom: 0.25rem;
+}
+
+.secret-surprise-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.secret-constellation-stage {
+  text-align: center;
+  position: relative;
+}
+
+.secret-sky-svg {
+  width: 100%;
+  max-width: 220px;
+  height: auto;
+  background-color: #17192a;
+  border-radius: var(--radius-md);
+  margin: 0 auto;
+  display: block;
+  border: 1px solid rgba(243, 201, 107, 0.35);
+  box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.secret-star-node {
+  cursor: pointer;
+  outline: none;
+}
+
+.secret-star-node:focus-visible .secret-star-dot {
+  stroke: #ffffff;
+  stroke-width: 3;
+}
+
+.secret-star-dot {
+  transition: r 0.2s ease, fill 0.2s ease, stroke 0.2s ease;
+}
+
+.secret-star-node:hover .secret-star-dot {
+  r: 8;
+  fill: #fff8f1;
+}
+
+.secret-star-status {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--dream-gold);
+  margin-top: 0.4rem;
+}
+
+.secret-recipe-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  background-color: var(--dream-gold-soft);
+  border: 1px solid var(--dream-gold-dark);
+  border-radius: var(--radius-sm);
+  padding: 0.85rem 1rem;
+  animation: recipePop 0.3s ease-out;
+}
+
+body.dream-mode-active .secret-recipe-card {
+  background-color: rgba(243, 201, 107, 0.2);
+  border-color: var(--dream-gold);
+}
+
+@keyframes recipePop {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.recipe-sparkle {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.recipe-text-wrap strong {
+  display: block;
+  font-size: 0.9rem;
+  color: var(--text-heading);
+  margin-bottom: 0.25rem;
+}
+
+.recipe-text-wrap p {
+  font-size: 0.82rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.secret-modal-footer {
+  border-top: 1px solid var(--border-soft);
+  padding: 1.15rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.secret-footer-whisper {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.btn-close-loft {
+  padding: 0.55rem 1.25rem;
+  font-size: 0.88rem;
+}
+
+@media (max-width: 600px) {
+  .secret-hero-row {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .secret-avatar-box {
+    margin: 0 auto;
+  }
+
+  .secret-modal-footer {
+    flex-direction: column;
+    align-items: stretch;
+    text-align: center;
+  }
+
+  .btn-close-loft {
+    justify-content: center;
+    width: 100%;
+  }
+}
+
