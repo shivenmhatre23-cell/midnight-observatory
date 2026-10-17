@@ -1,4 +1,6 @@
 import React from 'react';
+import LullabyMusicBox from './LullabyMusicBox';
+import ConstellationTelescope from './ConstellationTelescope';
 
 export default function ProjectShowcase() {
   const projects = [
@@ -38,16 +40,16 @@ export default function ProjectShowcase() {
       id: 'delivery-routes',
       title: 'Dream Delivery Routes',
       tagline: 'Constellation Skyways for Slumber',
-      badge: 'Celestial Map',
+      badge: 'Interactive Telescope',
       description:
-        'A constellation map connecting sleepy homes with custom dreams. Charting safe airway corridors above chimney smoke and tree hollows, ensuring quiet nocturnal drops right onto the pillows of tired woodland creatures.',
-      isConstellationMap: true,
+        'An interactive constellation map connecting sleepy homes with custom dreams. Chart safe airway corridors above chimney smoke and tree hollows to guide Pip’s nocturnal slumber skiff.',
+      isInteractiveTelescope: true,
       specs: [
-        { label: 'Active Waypoints', value: '18 Sleepy Burrows' },
+        { label: 'Active Waypoints', value: '5 Key Route Stars' },
         { label: 'Wind Corridor', value: 'Zephyr Path Alpha' },
         { label: 'Delivery Vehicle', value: 'Cloud-Drift Skiff' },
       ],
-      features: ['Star-guided vector navigation', 'Silent cloud-skiff tracks', 'Automated lullaby drops'],
+      features: ['Star-guided vector navigation', 'Live interactive sky telescope', 'Sequential star charting'],
     },
   ];
 
@@ -67,86 +69,8 @@ export default function ProjectShowcase() {
           {projects.map((project) => (
             <article key={project.id} className="project-card">
               <div className="card-visual-wrapper">
-                {project.isConstellationMap ? (
-                  <div className="constellation-canvas-container" aria-label="Celestial constellation map graphic">
-                    <svg
-                      viewBox="0 0 400 280"
-                      className="constellation-svg"
-                      role="img"
-                      aria-labelledby={`svg-${project.id}`}
-                    >
-                      <title id={`svg-${project.id}`}>Constellation map of dream routes</title>
-                      <defs>
-                        <radialGradient id="skyGlow" cx="50%" cy="50%" r="50%">
-                          <stop offset="0%" stopColor="#2e3454" stopOpacity="0.8" />
-                          <stop offset="100%" stopColor="#1b1d30" stopOpacity="1" />
-                        </radialGradient>
-                        <linearGradient id="routeLine" x1="0%" y1="0%" x2="100%" y2="100%">
-                          <stop offset="0%" stopColor="#f3c96b" stopOpacity="0.8" />
-                          <stop offset="50%" stopColor="#f4d6d7" stopOpacity="0.9" />
-                          <stop offset="100%" stopColor="#f3c96b" stopOpacity="0.8" />
-                        </linearGradient>
-                        <filter id="glow">
-                          <feGaussianBlur stdDeviation="3" result="coloredBlur" />
-                          <feMerge>
-                            <feMergeNode in="coloredBlur" />
-                            <feMergeNode in="SourceGraphic" />
-                          </feMerge>
-                        </filter>
-                      </defs>
-
-                      {/* Deep sky background */}
-                      <rect width="400" height="280" rx="16" fill="url(#skyGlow)" />
-
-                      {/* Background twinkling stars */}
-                      <circle cx="35" cy="45" r="1.5" fill="#f3c96b" opacity="0.6" />
-                      <circle cx="90" cy="180" r="1.2" fill="#fff8f1" opacity="0.5" />
-                      <circle cx="340" cy="40" r="1.5" fill="#fff8f1" opacity="0.7" />
-                      <circle cx="360" cy="220" r="1" fill="#f4d6d7" opacity="0.6" />
-                      <circle cx="150" cy="30" r="1.8" fill="#f3c96b" opacity="0.8" />
-
-                      {/* Flight routes connecting constellation nodes */}
-                      <path
-                        d="M 60 70 Q 130 110 200 80 T 330 130"
-                        fill="none"
-                        stroke="url(#routeLine)"
-                        strokeWidth="2.5"
-                        strokeDasharray="5,4"
-                      />
-                      <path
-                        d="M 200 80 Q 220 180 140 210 T 80 230"
-                        fill="none"
-                        stroke="url(#routeLine)"
-                        strokeWidth="2"
-                        strokeDasharray="4,4"
-                      />
-                      <path
-                        d="M 200 80 L 290 200"
-                        fill="none"
-                        stroke="rgba(243, 201, 107, 0.4)"
-                        strokeWidth="1.5"
-                      />
-
-                      {/* Constellation Nodes */}
-                      <g filter="url(#glow)">
-                        <circle cx="60" cy="70" r="5" fill="#f3c96b" />
-                        <circle cx="200" cy="80" r="7" fill="#fff8f1" stroke="#f3c96b" strokeWidth="2.5" />
-                        <circle cx="330" cy="130" r="5.5" fill="#f4d6d7" />
-                        <circle cx="140" cy="210" r="5" fill="#f3c96b" />
-                        <circle cx="290" cy="200" r="4.5" fill="#fff8f1" />
-                        <circle cx="80" cy="230" r="4" fill="#f4d6d7" />
-                      </g>
-
-                      {/* Node Labels */}
-                      <text x="65" y="60" fill="#f3c96b" fontSize="10" fontFamily="sans-serif">Observatory Peak</text>
-                      <text x="205" y="75" fill="#fff8f1" fontSize="11" fontWeight="bold" fontFamily="sans-serif">North Moonbeam</text>
-                      <text x="270" y="145" fill="#f4d6d7" fontSize="10" fontFamily="sans-serif">Badger Hollow</text>
-                      <text x="145" y="225" fill="#f3c96b" fontSize="10" fontFamily="sans-serif">Owl Perch 4</text>
-                    </svg>
-                    <div className="map-badge-overlay">
-                      <span>Live Skyway Grid</span>
-                    </div>
-                  </div>
+                {project.isInteractiveTelescope ? (
+                  <ConstellationTelescope />
                 ) : (
                   <div className="card-image-box">
                     <img
@@ -164,6 +88,9 @@ export default function ProjectShowcase() {
                 <span className="card-tagline">{project.tagline}</span>
                 <h3 className="card-title">{project.title}</h3>
                 <p className="card-description">{project.description}</p>
+
+                {/* Embed Playable Web Audio Music Box in Lullaby Lab */}
+                {project.id === 'lullaby-lab' && <LullabyMusicBox />}
 
                 <div className="card-specs">
                   {project.specs.map((spec) => (

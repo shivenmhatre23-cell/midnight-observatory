@@ -1382,3 +1382,794 @@ body.dream-mode-active .story-card-subtitle {
     align-items: center;
   }
 }
+
+/* ==========================================================================
+   Phase 2 Interactive Enhancements
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Interactive Constellation Telescope
+   -------------------------------------------------------------------------- */
+.constellation-telescope-card {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.telescope-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.telescope-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.telescope-icon {
+  font-size: 1.15rem;
+}
+
+.telescope-title {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: var(--text-heading);
+  margin: 0;
+}
+
+.telescope-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--cocoa);
+  box-shadow: var(--shadow-sm);
+}
+
+body.dream-mode-active .telescope-status-pill {
+  background-color: var(--midnight-soft);
+  color: var(--dream-gold);
+}
+
+.status-dot-sparkle {
+  color: var(--dream-gold);
+}
+
+.telescope-instructions {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.telescope-canvas-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 4px 18px rgba(34, 38, 63, 0.2), inset 0 0 25px rgba(0, 0, 0, 0.4);
+}
+
+.telescope-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.telescope-svg.completed {
+  filter: drop-shadow(0 0 12px rgba(243, 201, 107, 0.45));
+}
+
+/* SVG Interactive Nodes */
+.star-node-group {
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.2s ease;
+}
+
+.star-node-group:focus-visible .star-focus-ring {
+  stroke: var(--dream-gold);
+  stroke-width: 2.5;
+  stroke-dasharray: 4,3;
+  animation: rotateFocus 8s linear infinite;
+}
+
+@keyframes rotateFocus {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.star-focus-ring {
+  fill: none;
+  stroke: transparent;
+  transform-origin: 0 0;
+}
+
+.star-pulse-ring {
+  animation: pulseTarget 1.8s ease-out infinite;
+  transform-origin: 0 0;
+}
+
+@keyframes pulseTarget {
+  0% {
+    r: 6;
+    opacity: 0.9;
+  }
+  100% {
+    r: 18;
+    opacity: 0;
+  }
+}
+
+.star-core {
+  transition: r 0.25s ease, fill 0.25s ease, stroke 0.25s ease;
+}
+
+.star-node-group:hover .star-core {
+  r: 7.5;
+  stroke: #ffffff;
+}
+
+.star-label {
+  font-family: var(--font-sans);
+  font-size: 9.5px;
+  font-weight: 700;
+  fill: #ebdacf;
+  pointer-events: none;
+  letter-spacing: 0.02em;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.85);
+}
+
+.star-label.active-label {
+  fill: var(--dream-gold);
+}
+
+.animated-route-line {
+  stroke-linecap: round;
+  animation: drawLine 0.5s ease-out;
+}
+
+@keyframes drawLine {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+/* Completed Overlay */
+.constellation-completed-banner {
+  position: absolute;
+  inset: 0;
+  background: rgba(21, 23, 38, 0.88);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  padding: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  color: #fff8f1;
+  animation: bannerFadeIn 0.4s ease-out;
+  border-radius: var(--radius-md);
+  border: 1.5px solid var(--dream-gold);
+}
+
+@keyframes bannerFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.banner-sparkle {
+  font-size: 2.2rem;
+  flex-shrink: 0;
+}
+
+.banner-body strong {
+  display: block;
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--dream-gold);
+  margin-bottom: 0.35rem;
+}
+
+.banner-body p {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: #ebdacf;
+  margin: 0;
+}
+
+/* Telescope Footer Feedback and Reset */
+.telescope-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.telescope-feedback-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.78rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: var(--radius-sm);
+  flex: 1;
+  min-width: 180px;
+}
+
+.feedback-info {
+  background-color: var(--bg-card);
+  color: var(--cocoa);
+  border: 1px solid var(--border-soft);
+}
+
+body.dream-mode-active .feedback-info {
+  background-color: var(--midnight-soft);
+  color: var(--cream);
+}
+
+.feedback-success {
+  background-color: var(--dream-gold-soft);
+  color: var(--cocoa);
+  border: 1px solid var(--border-gold);
+  font-weight: 600;
+}
+
+body.dream-mode-active .feedback-success {
+  background-color: rgba(243, 201, 107, 0.2);
+  color: var(--dream-gold);
+}
+
+.feedback-warning {
+  background-color: var(--blush-light);
+  color: var(--berry-dark);
+  border: 1px solid var(--border-accent);
+}
+
+body.dream-mode-active .feedback-warning {
+  background-color: rgba(163, 64, 99, 0.25);
+  color: var(--blush);
+}
+
+.btn-reset-telescope {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.75rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  transition: all 0.2s ease;
+}
+
+.btn-reset-telescope:hover {
+  border-color: var(--berry);
+  color: var(--berry);
+  transform: translateY(-1px);
+}
+
+/* --------------------------------------------------------------------------
+   Lullaby Lab Web Audio Widget
+   -------------------------------------------------------------------------- */
+.lullaby-interactive-widget {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 1.15rem;
+  margin: 1rem 0;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+body.dream-mode-active .lullaby-interactive-widget {
+  background: rgba(34, 38, 63, 0.75);
+}
+
+.music-box-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.btn-audio-control {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.5rem 1.15rem;
+  border-radius: var(--radius-full);
+  font-size: 0.88rem;
+  font-weight: 700;
+  transition: all 0.25s ease;
+}
+
+.btn-play {
+  background: linear-gradient(135deg, var(--berry), var(--berry-dark));
+  color: #ffffff;
+  box-shadow: 0 4px 10px rgba(163, 64, 99, 0.3);
+}
+
+.btn-play:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(163, 64, 99, 0.4);
+}
+
+.btn-play.playing {
+  background: linear-gradient(135deg, var(--dream-gold-dark), var(--cocoa));
+  animation: musicBoxPulse 2s ease-in-out infinite alternate;
+}
+
+@keyframes musicBoxPulse {
+  0% {
+    box-shadow: 0 0 6px rgba(243, 201, 107, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 16px rgba(243, 201, 107, 0.8);
+  }
+}
+
+.btn-play:disabled {
+  opacity: 0.9;
+  cursor: default;
+}
+
+.btn-stop {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  color: var(--text-heading);
+}
+
+.btn-stop:hover:not(:disabled) {
+  border-color: var(--berry);
+  color: var(--berry);
+}
+
+.btn-stop:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.audio-error-banner {
+  background-color: var(--blush-light);
+  border: 1px solid var(--border-accent);
+  color: var(--berry);
+  padding: 0.4rem 0.75rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.78rem;
+}
+
+/* Melody Chime Bar */
+.melody-track-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.tracker-lead-text {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--berry);
+  letter-spacing: 0.02em;
+}
+
+body.dream-mode-active .tracker-lead-text {
+  color: var(--dream-gold);
+}
+
+.notes-chime-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.25rem;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-full);
+  padding: 0.45rem 0.65rem;
+}
+
+body.dream-mode-active .notes-chime-bar {
+  background-color: var(--midnight-soft);
+}
+
+.chime-pin {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.15rem;
+  transition: transform 0.2s ease;
+}
+
+.pin-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--border-soft);
+  transition: background-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.pin-name {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--text-muted);
+}
+
+.chime-pin.pin-active .pin-dot {
+  background-color: var(--dream-gold);
+  transform: scale(1.6);
+  box-shadow: 0 0 10px var(--dream-gold);
+}
+
+.chime-pin.pin-active .pin-name {
+  color: var(--berry);
+  font-weight: 800;
+}
+
+body.dream-mode-active .chime-pin.pin-active .pin-name {
+  color: var(--dream-gold);
+}
+
+.chime-pin.pin-passed .pin-dot {
+  background-color: var(--blush);
+}
+
+/* --------------------------------------------------------------------------
+   Dream Drop Form Section
+   -------------------------------------------------------------------------- */
+.dream-drop-section {
+  background-color: var(--cream);
+  border-top: 1px solid var(--border-soft);
+  padding: 5.5rem 0;
+  transition: background-color 0.3s ease;
+}
+
+body.dream-mode-active .dream-drop-section {
+  background-color: rgba(34, 38, 63, 0.4);
+}
+
+.dream-drop-layout {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+.dream-form-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 2.25rem;
+  box-shadow: var(--shadow-md);
+  position: relative;
+}
+
+.form-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.3rem 0.85rem;
+  background-color: var(--dream-gold-soft);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--cocoa);
+  margin-bottom: 1.5rem;
+}
+
+body.dream-mode-active .form-card-badge {
+  background-color: rgba(243, 201, 107, 0.2);
+  color: var(--dream-gold);
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.35rem;
+}
+
+.field-label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.field-label {
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.required-star {
+  color: var(--berry);
+}
+
+.char-count {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-main);
+  background-color: var(--bg-card-subtle);
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+body.dream-mode-active .form-input,
+body.dream-mode-active .form-select,
+body.dream-mode-active .form-textarea {
+  background-color: var(--midnight-soft);
+  color: var(--cream);
+  border-color: var(--border-soft);
+}
+
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--berry);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(163, 64, 99, 0.15);
+}
+
+.input-error {
+  border-color: #ef4444 !important;
+}
+
+.field-error-msg {
+  font-size: 0.78rem;
+  color: #dc2626;
+  margin-top: 0.2rem;
+}
+
+.form-success-banner {
+  background-color: var(--dream-gold-soft);
+  border: 1px solid var(--border-gold);
+  color: var(--cocoa);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  margin-bottom: 1.25rem;
+  animation: fadeIn 0.3s ease;
+}
+
+body.dream-mode-active .form-success-banner {
+  background-color: rgba(243, 201, 107, 0.2);
+  color: var(--dream-gold);
+}
+
+.form-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.privacy-disclaimer {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  border-top: 1px solid var(--border-soft);
+  padding-top: 1rem;
+  margin: 0;
+}
+
+/* Dreams Preview Column */
+.dream-list-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.list-column-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.list-column-title {
+  font-size: 1.35rem;
+  color: var(--text-heading);
+}
+
+.list-badge {
+  background-color: var(--blush);
+  color: var(--berry);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-full);
+}
+
+body.dream-mode-active .list-badge {
+  background-color: rgba(163, 64, 99, 0.3);
+  color: var(--blush);
+}
+
+.empty-basket-card {
+  background-color: var(--bg-card);
+  border: 1.5px dashed var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+
+.empty-basket-icon {
+  font-size: 2.5rem;
+  display: block;
+  margin-bottom: 0.75rem;
+}
+
+.empty-basket-text {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.dreams-scroll-container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 520px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.dream-whisper-card {
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  position: relative;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.dream-whisper-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-gold);
+}
+
+.whisper-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.whisper-recipient {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--berry);
+}
+
+body.dream-mode-active .whisper-recipient {
+  color: var(--dream-gold);
+}
+
+.btn-delete-whisper {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-delete-whisper:hover {
+  background-color: var(--blush);
+  color: var(--berry);
+}
+
+.whisper-title {
+  font-size: 1.15rem;
+  color: var(--text-heading);
+  margin: 0;
+}
+
+.whisper-desc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0;
+}
+
+.whisper-footer {
+  border-top: 1px dashed var(--border-soft);
+  padding-top: 0.5rem;
+  margin-top: 0.25rem;
+}
+
+.whisper-tag {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--dream-gold-dark);
+}
+
+body.dream-mode-active .whisper-tag {
+  color: var(--dream-gold);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive Updates for Phase 2
+   -------------------------------------------------------------------------- */
+@media (max-width: 1024px) {
+  .dream-drop-layout {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .dream-form-card {
+    padding: 1.5rem;
+  }
+
+  .form-actions-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .form-actions-row .btn-primary,
+  .form-actions-row .btn-secondary {
+    justify-content: center;
+    width: 100%;
+  }
+
+  .music-box-controls {
+    flex-wrap: wrap;
+  }
+
+  .notes-chime-bar {
+    overflow-x: auto;
+    padding: 0.4rem 0.5rem;
+  }
+
+  .chime-pin {
+    min-width: 22px;
+  }
+}

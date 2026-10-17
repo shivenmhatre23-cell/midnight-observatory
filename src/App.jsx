@@ -4,6 +4,7 @@ import Hero from './components/Hero';
 import CharacterIntro from './components/CharacterIntro';
 import ProjectShowcase from './components/ProjectShowcase';
 import StoryPreview from './components/StoryPreview';
+import DreamDropForm from './components/DreamDropForm';
 import Footer from './components/Footer';
 import './App.css';
 
@@ -46,6 +47,9 @@ function App() {
 
         {/* Origin Story Preview Section */}
         <StoryPreview />
+
+        {/* Ephemeral Dream Drop Form Section */}
+        <DreamDropForm />
       </main>
 
       {/* Observatory Footer */}

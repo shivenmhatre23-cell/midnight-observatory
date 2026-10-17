@@ -14,7 +14,7 @@ export default function Navbar({ onToggleDreamMode, dreamModeActive }) {
     { label: 'About Pip', href: '#about' },
     { label: 'Dream Works', href: '#showcase' },
     { label: 'Origin Story', href: '#story' },
-    { label: 'Observatory', href: '#observatory' },
+    { label: 'Whisper a Dream', href: '#dream-drop' },
   ];
 
   return (
