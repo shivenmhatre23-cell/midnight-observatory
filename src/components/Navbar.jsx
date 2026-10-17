@@ -56,7 +56,15 @@ export default function Navbar({ onToggleDreamMode, dreamModeActive }) {
               <span className="dream-indicator" aria-hidden="true">
                 {dreamModeActive ? '★' : '✧'}
               </span>
-              <span>{dreamModeActive ? 'Dreaming...' : 'Enter Dream Mode'}</span>
+              <span className="dream-label-desktop">
+                {dreamModeActive ? 'Dreaming...' : 'Enter Dream Mode'}
+              </span>
+              <span className="dream-label-tablet">
+                {dreamModeActive ? 'Dreaming' : 'Dream Mode'}
+              </span>
+              <span className="dream-label-mobile">
+                {dreamModeActive ? 'Dreaming' : 'Dream'}
+              </span>
             </button>
             {showDreamNotice && (
               <div className="dream-notice-popup" role="status">
@@ -78,9 +86,11 @@ export default function Navbar({ onToggleDreamMode, dreamModeActive }) {
             aria-expanded={mobileMenuOpen}
             aria-label="Toggle navigation menu"
           >
-            <span className="hamburger-line"></span>
-            <span className="hamburger-line"></span>
-            <span className="hamburger-line"></span>
+            <span className="hamburger-box" aria-hidden="true">
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+              <span className="hamburger-line"></span>
+            </span>
           </button>
         </div>
       </div>
