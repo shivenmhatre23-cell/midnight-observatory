@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import SecretObservatoryModal from './SecretObservatoryModal';
 
-export default function Footer({ onEasterEggDiscovered }) {
+export default function Footer({ onEasterEggDiscovered, sparklesEnabled, onToggleSparkles }) {
   const [easterEggFound, setEasterEggFound] = useState(false);
   const [isLoftOpen, setIsLoftOpen] = useState(false);
   const triggerRef = useRef(null);
@@ -38,6 +38,26 @@ export default function Footer({ onEasterEggDiscovered }) {
           <div className="web-badge">
             <span className="badge-ico">🍵</span>
             <span>Chamomile Powered</span>
+          </div>
+        </div>
+
+        {/* Ambiance Settings Bar */}
+        <div className="footer-ambiance-bar" role="region" aria-label="Observatory Ambiance Settings">
+          <div className="ambiance-label">
+            <span className="ambiance-sparkle">✧</span>
+            <span>Observatory Ambiance:</span>
+          </div>
+          <div className="ambiance-controls-group">
+            <button
+              type="button"
+              className={`ambiance-toggle-btn ${sparklesEnabled ? 'active' : ''}`}
+              onClick={onToggleSparkles}
+              aria-pressed={sparklesEnabled}
+              aria-label="Toggle celestial sparkle clicks"
+            >
+              <span className="toggle-ico" aria-hidden="true">{sparklesEnabled ? '✨' : '✧'}</span>
+              <span>Sparkle Clicks: {sparklesEnabled ? 'ON' : 'OFF'}</span>
+            </button>
           </div>
         </div>
 

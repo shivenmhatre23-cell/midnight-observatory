@@ -2491,3 +2491,112 @@ body.dream-mode-active .secret-recipe-card {
   }
 }
 
+/* --------------------------------------------------------------------------
+   Celestial Sparkle Cursor & Ambiance Controls (Phase 3)
+   -------------------------------------------------------------------------- */
+.sparkle-layer-container {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: 9999;
+}
+
+.celestial-sparkle-particle {
+  position: absolute;
+  pointer-events: none;
+  user-select: none;
+  transform: translate(-50%, -50%);
+  line-height: 1;
+  text-shadow: 0 0 8px currentColor;
+  animation: sparkleFlyOut 0.65s cubic-bezier(0.2, 0.8, 0.3, 1) forwards;
+}
+
+@keyframes sparkleFlyOut {
+  0% {
+    transform: translate(-50%, -50%) scale(0.3) rotate(0deg);
+    opacity: 0;
+  }
+  30% {
+    opacity: 1;
+    transform: translate(calc(-50% + var(--dx) * 0.4), calc(-50% + var(--dy) * 0.4)) scale(1.2) rotate(45deg);
+  }
+  100% {
+    transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(0.2) rotate(120deg);
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .celestial-sparkle-particle {
+    display: none !important;
+  }
+}
+
+.footer-ambiance-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 0.75rem 1.25rem;
+  background-color: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(243, 201, 107, 0.2);
+  border-radius: var(--radius-full);
+  max-width: 520px;
+  margin-inline: auto;
+  flex-wrap: wrap;
+}
+
+.ambiance-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--dream-gold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ambiance-controls-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.ambiance-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.35rem 0.85rem;
+  background-color: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--cream);
+  transition: all 0.2s ease;
+}
+
+.ambiance-toggle-btn:hover {
+  background-color: rgba(255, 255, 255, 0.15);
+  border-color: var(--dream-gold);
+  color: #ffffff;
+  transform: translateY(-1px);
+}
+
+.ambiance-toggle-btn.active {
+  background: linear-gradient(135deg, var(--berry), var(--midnight));
+  border-color: var(--dream-gold);
+  color: var(--dream-gold);
+  box-shadow: 0 0 10px rgba(243, 201, 107, 0.3);
+}
+
+.ambiance-toggle-btn:focus-visible {
+  outline: 2px solid var(--dream-gold);
+  outline-offset: 2px;
+}
+
+

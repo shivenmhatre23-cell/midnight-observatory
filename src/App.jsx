@@ -6,10 +6,18 @@ import ProjectShowcase from './components/ProjectShowcase';
 import StoryPreview from './components/StoryPreview';
 import DreamDropForm from './components/DreamDropForm';
 import Footer from './components/Footer';
+import SparkleCursor from './components/SparkleCursor';
 import './App.css';
 
 function App() {
   const [dreamModeActive, setDreamModeActive] = useState(false);
+  const [sparklesEnabled, setSparklesEnabled] = useState(() => {
+    try {
+      return localStorage.getItem('pip-sparkles-enabled') === 'true';
+    } catch {
+      return false;
+    }
+  });
 
   useEffect(() => {
     if (dreamModeActive) {
@@ -21,6 +29,18 @@ function App() {
 
   const toggleDreamMode = () => {
     setDreamModeActive((prev) => !prev);
+  };
+
+  const toggleSparkles = () => {
+    setSparklesEnabled((prev) => {
+      const next = !prev;
+      try {
+        localStorage.setItem('pip-sparkles-enabled', String(next));
+      } catch {
+        // Safe fallback if localStorage is blocked
+      }
+      return next;
+    });
   };
 
   return (
@@ -52,8 +72,14 @@ function App() {
         <DreamDropForm />
       </main>
 
-      {/* Observatory Footer */}
-      <Footer />
+      {/* Optional Celestial Sparkle Cursor Layer */}
+      <SparkleCursor enabled={sparklesEnabled} />
+
+      {/* Observatory Footer with Ambiance Controls */}
+      <Footer
+        sparklesEnabled={sparklesEnabled}
+        onToggleSparkles={toggleSparkles}
+      />
     </div>
   );
 }
