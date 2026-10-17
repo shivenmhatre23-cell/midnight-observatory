@@ -7,6 +7,7 @@ import StoryPreview from './components/StoryPreview';
 import DreamDropForm from './components/DreamDropForm';
 import Footer from './components/Footer';
 import SparkleCursor from './components/SparkleCursor';
+import useSoundEffects from './hooks/useSoundEffects';
 import './App.css';
 
 function App() {
@@ -18,6 +19,14 @@ function App() {
       return false;
     }
   });
+
+  const {
+    soundEnabled,
+    toggleSound,
+    playConstellationSound,
+    playSecretSound,
+    playDreamSubmittedSound,
+  } = useSoundEffects();
 
   useEffect(() => {
     if (dreamModeActive) {
@@ -63,13 +72,13 @@ function App() {
         <CharacterIntro />
 
         {/* Project Showcase Section */}
-        <ProjectShowcase />
+        <ProjectShowcase onConstellationComplete={playConstellationSound} />
 
         {/* Origin Story Preview Section */}
         <StoryPreview />
 
         {/* Ephemeral Dream Drop Form Section */}
-        <DreamDropForm />
+        <DreamDropForm onDreamSubmitted={playDreamSubmittedSound} />
       </main>
 
       {/* Optional Celestial Sparkle Cursor Layer */}
@@ -79,6 +88,9 @@ function App() {
       <Footer
         sparklesEnabled={sparklesEnabled}
         onToggleSparkles={toggleSparkles}
+        soundEnabled={soundEnabled}
+        onToggleSound={toggleSound}
+        onEasterEggDiscovered={playSecretSound}
       />
     </div>
   );

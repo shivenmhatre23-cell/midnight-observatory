@@ -1,7 +1,13 @@
 import React, { useState, useRef } from 'react';
 import SecretObservatoryModal from './SecretObservatoryModal';
 
-export default function Footer({ onEasterEggDiscovered, sparklesEnabled, onToggleSparkles }) {
+export default function Footer({
+  onEasterEggDiscovered,
+  sparklesEnabled,
+  onToggleSparkles,
+  soundEnabled,
+  onToggleSound,
+}) {
   const [easterEggFound, setEasterEggFound] = useState(false);
   const [isLoftOpen, setIsLoftOpen] = useState(false);
   const triggerRef = useRef(null);
@@ -57,6 +63,17 @@ export default function Footer({ onEasterEggDiscovered, sparklesEnabled, onToggl
             >
               <span className="toggle-ico" aria-hidden="true">{sparklesEnabled ? '✨' : '✧'}</span>
               <span>Sparkle Clicks: {sparklesEnabled ? 'ON' : 'OFF'}</span>
+            </button>
+
+            <button
+              type="button"
+              className={`ambiance-toggle-btn ${soundEnabled ? 'active' : ''}`}
+              onClick={onToggleSound}
+              aria-pressed={soundEnabled}
+              aria-label="Toggle interaction chime sounds"
+            >
+              <span className="toggle-ico" aria-hidden="true">{soundEnabled ? '🔔' : '🔕'}</span>
+              <span>Chimes: {soundEnabled ? 'ON' : 'MUTED'}</span>
             </button>
           </div>
         </div>

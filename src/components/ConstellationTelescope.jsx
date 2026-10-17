@@ -8,7 +8,7 @@ const STARS = [
   { id: 4, order: 5, name: 'Cradle of Dreams', x: 100, y: 200, role: 'Safe Slumber Haven' },
 ];
 
-export default function ConstellationTelescope() {
+export default function ConstellationTelescope({ onConstellationComplete }) {
   const [selectedStars, setSelectedStars] = useState([]);
   const [feedback, setFeedback] = useState({
     text: 'Click or press Enter on Star 1 (Observatory Peak) to begin charting tonight’s route.',
@@ -44,6 +44,9 @@ export default function ConstellationTelescope() {
 
       if (newSelection.length === STARS.length) {
         setIsCompleted(true);
+        if (onConstellationComplete) {
+          onConstellationComplete();
+        }
         setFeedback({
           text: '✦ Constellation fully awakened! All 5 skyway stars linked.',
           type: 'success',

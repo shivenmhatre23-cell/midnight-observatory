@@ -7,7 +7,7 @@ const RECIPIENT_OPTIONS = [
   'Star-gazers Everywhere ✨',
 ];
 
-export default function DreamDropForm() {
+export default function DreamDropForm({ onDreamSubmitted }) {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [recipient, setRecipient] = useState(RECIPIENT_OPTIONS[0]);
@@ -49,6 +49,9 @@ export default function DreamDropForm() {
     };
 
     setDreamsList((prev) => [newDream, ...prev]);
+    if (onDreamSubmitted) {
+      onDreamSubmitted();
+    }
     setStatusMessage(`✦ Your dream "${newDream.title}" has been nestled into Pip's cloud basket!`);
     setTitle('');
     setDescription('');

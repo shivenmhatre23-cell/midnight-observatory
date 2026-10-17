@@ -2,7 +2,7 @@ import React from 'react';
 import LullabyMusicBox from './LullabyMusicBox';
 import ConstellationTelescope from './ConstellationTelescope';
 
-export default function ProjectShowcase() {
+export default function ProjectShowcase({ onConstellationComplete }) {
   const projects = [
     {
       id: 'lullaby-lab',
@@ -70,7 +70,7 @@ export default function ProjectShowcase() {
             <article key={project.id} className="project-card">
               <div className="card-visual-wrapper">
                 {project.isInteractiveTelescope ? (
-                  <ConstellationTelescope />
+                  <ConstellationTelescope onConstellationComplete={onConstellationComplete} />
                 ) : (
                   <div className="card-image-box">
                     <img
