@@ -559,6 +559,31 @@ body.dream-mode-active .character-frame {
   }
 }
 
+/* Dream Mode Artwork Smooth Crossfade */
+.theme-fade-img {
+  animation: themeFadeIn 0.4s ease-in-out;
+}
+
+@keyframes themeFadeIn {
+  from {
+    opacity: 0.25;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.character-image.theme-fade-img {
+  animation: heroHover 5s ease-in-out infinite alternate, themeFadeIn 0.4s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theme-fade-img,
+  .character-image.theme-fade-img {
+    animation: none !important;
+  }
+}
+
 .character-caption-tag {
   position: absolute;
   bottom: 18px;

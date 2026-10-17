@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function Hero() {
+export default function Hero({ dreamModeActive = false }) {
+  const heroImageSrc = dreamModeActive
+    ? `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.png`
+    : `${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`;
+
   return (
     <section className="hero-section" id="hero">
       <div className="container hero-container">
@@ -63,9 +67,10 @@ export default function Hero() {
 
           <div className="character-frame">
             <img
-              src={`${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`}
+              key={dreamModeActive ? 'hero-dream' : 'hero-light'}
+              src={heroImageSrc}
               alt="Pip the sleepy Skull Baby resting gently atop a fluffy dream cloud"
-              className="character-image"
+              className="character-image theme-fade-img"
               width="500"
               height="500"
               loading="eager"

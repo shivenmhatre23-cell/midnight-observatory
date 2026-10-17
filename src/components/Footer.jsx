@@ -7,6 +7,7 @@ export default function Footer({
   onToggleSparkles,
   soundEnabled,
   onToggleSound,
+  dreamModeActive = false,
 }) {
   const [easterEggFound, setEasterEggFound] = useState(false);
   const [isLoftOpen, setIsLoftOpen] = useState(false);
@@ -113,6 +114,7 @@ export default function Footer({
           isOpen={isLoftOpen}
           onClose={() => setIsLoftOpen(false)}
           triggerRef={triggerRef}
+          dreamModeActive={dreamModeActive}
         />
 
         {/* Main Footer Info */}

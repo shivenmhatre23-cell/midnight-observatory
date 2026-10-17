@@ -11,7 +11,13 @@ import useSoundEffects from './hooks/useSoundEffects';
 import './App.css';
 
 function App() {
-  const [dreamModeActive, setDreamModeActive] = useState(false);
+  const [dreamModeActive, setDreamModeActive] = useState(() => {
+    try {
+      return localStorage.getItem('pip-dream-mode') === 'true';
+    } catch {
+      return false;
+    }
+  });
   const [sparklesEnabled, setSparklesEnabled] = useState(() => {
     try {
       return localStorage.getItem('pip-sparkles-enabled') === 'true';
@@ -28,11 +34,34 @@ function App() {
     playDreamSubmittedSound,
   } = useSoundEffects();
 
+  // Preload light and dark assets for seamless crossfade
+  useEffect(() => {
+    const imagesToPreload = [
+      `${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`,
+      `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.png`,
+      `${import.meta.env.BASE_URL}images/pip_portrait.png`,
+      `${import.meta.env.BASE_URL}images/pip_portrait_dream_mode.png`,
+      `${import.meta.env.BASE_URL}images/pip_lullaby_box.png`,
+      `${import.meta.env.BASE_URL}images/pip_lullaby_box_dream_mode.png`,
+      `${import.meta.env.BASE_URL}images/pip_dream_lantern.png`,
+      `${import.meta.env.BASE_URL}images/pip_dream_lantern_dream_mode.png`,
+    ];
+    imagesToPreload.forEach((src) => {
+      const img = new Image();
+      img.src = src;
+    });
+  }, []);
+
   useEffect(() => {
     if (dreamModeActive) {
       document.body.classList.add('dream-mode-active');
     } else {
       document.body.classList.remove('dream-mode-active');
+    }
+    try {
+      localStorage.setItem('pip-dream-mode', String(dreamModeActive));
+    } catch {
+      // Safe fallback if localStorage is blocked
     }
   }, [dreamModeActive]);
 
@@ -66,13 +95,16 @@ function App() {
       {/* Main Content Area */}
       <main>
         {/* Hero Section */}
-        <Hero />
+        <Hero dreamModeActive={dreamModeActive} />
 
         {/* Character Introduction Section */}
-        <CharacterIntro />
+        <CharacterIntro dreamModeActive={dreamModeActive} />
 
         {/* Project Showcase Section */}
-        <ProjectShowcase onConstellationComplete={playConstellationSound} />
+        <ProjectShowcase
+          onConstellationComplete={playConstellationSound}
+          dreamModeActive={dreamModeActive}
+        />
 
         {/* Origin Story Preview Section */}
         <StoryPreview />
@@ -91,6 +123,7 @@ function App() {
         soundEnabled={soundEnabled}
         onToggleSound={toggleSound}
         onEasterEggDiscovered={playSecretSound}
+        dreamModeActive={dreamModeActive}
       />
     </div>
   );

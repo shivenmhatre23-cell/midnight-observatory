@@ -2,7 +2,7 @@ import React from 'react';
 import LullabyMusicBox from './LullabyMusicBox';
 import ConstellationTelescope from './ConstellationTelescope';
 
-export default function ProjectShowcase({ onConstellationComplete }) {
+export default function ProjectShowcase({ onConstellationComplete, dreamModeActive = false }) {
   const projects = [
     {
       id: 'lullaby-lab',
@@ -11,7 +11,9 @@ export default function ProjectShowcase({ onConstellationComplete }) {
       badge: 'Harmonic Engine',
       description:
         'A soothing music box that designs gentle bedtime melodies. Powered by a hand-carved golden winding key, tiny brass cylinders chime custom frequencies calculated to slow fluttering heartbeats and lull busy minds to sleep.',
-      image: `${import.meta.env.BASE_URL}images/pip_lullaby_box.png`,
+      image: dreamModeActive
+        ? `${import.meta.env.BASE_URL}images/pip_lullaby_box_dream_mode.png`
+        : `${import.meta.env.BASE_URL}images/pip_lullaby_box.png`,
       alt: 'The golden Lullaby Lab music box with star chimes and delicate key',
       specs: [
         { label: 'Frequency', value: '432 Hz Gentle Chime' },
@@ -27,7 +29,9 @@ export default function ProjectShowcase({ onConstellationComplete }) {
       badge: 'Comfort Craft',
       description:
         'Cozy lamps and lanterns that turn darkness into comfort. Each lantern captures a fragment of crescent moonlight enclosed in warm blown glass, casting gentle honey-amber auras that soften shadows without disturbing deep sleep.',
-      image: `${import.meta.env.BASE_URL}images/pip_dream_lantern.png`,
+      image: dreamModeActive
+        ? `${import.meta.env.BASE_URL}images/pip_dream_lantern_dream_mode.png`
+        : `${import.meta.env.BASE_URL}images/pip_dream_lantern.png`,
       alt: 'A glowing crescent moon dream lantern casting cozy warm light',
       specs: [
         { label: 'Color Temp', value: '2200K Honey Amber' },
@@ -74,9 +78,10 @@ export default function ProjectShowcase({ onConstellationComplete }) {
                 ) : (
                   <div className="card-image-box">
                     <img
+                      key={`${project.id}-${dreamModeActive ? 'dark' : 'light'}`}
                       src={project.image}
                       alt={project.alt}
-                      className="card-artwork"
+                      className="card-artwork theme-fade-img"
                       loading="lazy"
                     />
                   </div>

@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function CharacterIntro() {
+export default function CharacterIntro({ dreamModeActive = false }) {
+  const portraitSrc = dreamModeActive
+    ? `${import.meta.env.BASE_URL}images/pip_portrait_dream_mode.png`
+    : `${import.meta.env.BASE_URL}images/pip_portrait.png`;
+
   const traits = [
     {
       title: 'Gentle Skull Baby',
@@ -49,9 +53,10 @@ export default function CharacterIntro() {
             <div className="portrait-card">
               <div className="portrait-inner">
                 <img
-                  src={`${import.meta.env.BASE_URL}images/pip_portrait.png`}
+                  key={dreamModeActive ? 'portrait-dream' : 'portrait-light'}
+                  src={portraitSrc}
                   alt="Official studio portrait of Pip the Skull Baby wearing a dreamy nightcap"
-                  className="portrait-img"
+                  className="portrait-img theme-fade-img"
                   width="440"
                   height="440"
                   loading="lazy"

@@ -8,11 +8,24 @@ const SECRET_STARS = [
   { id: 'star-d', name: 'Puff Tail', x: 120, y: 95 },
 ];
 
-export default function SecretObservatoryModal({ isOpen, onClose, triggerRef, onSecretDiscovered }) {
+export default function SecretObservatoryModal({
+  isOpen,
+  onClose,
+  triggerRef,
+  onSecretDiscovered,
+  dreamModeActive,
+}) {
   const modalRef = useRef(null);
   const closeButtonRef = useRef(null);
   const [litStars, setLitStars] = useState([]);
   const [recipeUnlocked, setRecipeUnlocked] = useState(false);
+
+  const isDream =
+    dreamModeActive ??
+    (typeof document !== 'undefined' && document.body.classList.contains('dream-mode-active'));
+  const avatarSrc = isDream
+    ? `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.png`
+    : `${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`;
 
   // Focus management & Escape key listener
   useEffect(() => {
@@ -135,9 +148,10 @@ export default function SecretObservatoryModal({ isOpen, onClose, triggerRef, on
           <div className="secret-hero-row">
             <div className="secret-avatar-box">
               <img
-                src={`${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`}
+                key={isDream ? 'secret-dream' : 'secret-light'}
+                src={avatarSrc}
                 alt="Pip dozing warmly on a cloud pillow in the secret loft"
-                className="secret-pip-img"
+                className="secret-pip-img theme-fade-img"
                 width="140"
                 height="140"
               />
