@@ -2599,4 +2599,80 @@ body.dream-mode-active .secret-recipe-card {
   outline-offset: 2px;
 }
 
+/* --------------------------------------------------------------------------
+   Ultra-Narrow Responsive (≤360px) & Touch Target Polish
+   -------------------------------------------------------------------------- */
+@media (max-width: 360px) {
+  .container {
+    padding: 0 0.85rem;
+  }
+
+  .navbar-container {
+    height: 4.25rem;
+  }
+
+  .brand-icon-wrapper {
+    width: 36px;
+    height: 36px;
+  }
+
+  .brand-title {
+    font-size: 1.05rem;
+  }
+
+  .brand-subtitle {
+    font-size: 0.65rem;
+  }
+
+  .btn-dream-mode {
+    padding: 0.45rem 0.75rem;
+    font-size: 0.78rem;
+  }
+
+  .hero-title {
+    font-size: 2.1rem;
+  }
+
+  .hero-intro {
+    font-size: 1.05rem;
+  }
+
+  .hero-actions .btn-primary,
+  .hero-actions .btn-secondary {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .footer-ambiance-bar {
+    flex-direction: column;
+    border-radius: var(--radius-md);
+    padding: 0.85rem;
+    gap: 0.65rem;
+  }
+
+  .ambiance-controls-group {
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .ambiance-toggle-btn {
+    width: 100%;
+    justify-content: center;
+    min-height: 44px;
+  }
+
+  .secret-modal-dialog {
+    padding: 0;
+  }
+
+  .secret-modal-header,
+  .secret-modal-body,
+  .secret-modal-footer {
+    padding: 1rem 0.85rem;
+  }
+}
+
+
 
