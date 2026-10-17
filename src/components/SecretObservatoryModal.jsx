@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 
 const SECRET_STARS = [
   { id: 'star-a', name: 'Left Moon-Ear', x: 45, y: 35 },
@@ -95,7 +96,7 @@ export default function SecretObservatoryModal({ isOpen, onClose, triggerRef, on
     }
   };
 
-  return (
+  const modalContent = (
     <div
       className="secret-modal-backdrop"
       onClick={(e) => {
@@ -244,4 +245,8 @@ export default function SecretObservatoryModal({ isOpen, onClose, triggerRef, on
       </div>
     </div>
   );
+
+  return typeof document !== 'undefined'
+    ? createPortal(modalContent, document.body)
+    : null;
 }
