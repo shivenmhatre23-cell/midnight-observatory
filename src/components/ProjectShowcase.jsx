@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import LullabyMusicBox from './LullabyMusicBox';
 import ConstellationTelescope from './ConstellationTelescope';
 import NightlightAmbience from './NightlightAmbience';
+import { NIGHTLIGHT_AURAS } from '../data/nightlightAuras';
 
 export default function ProjectShowcase({ onConstellationComplete, dreamModeActive = false }) {
+  const [selectedAuraIndex, setSelectedAuraIndex] = useState(0);
+  const currentAura = NIGHTLIGHT_AURAS[selectedAuraIndex] || NIGHTLIGHT_AURAS[0];
+
   const projects = [
     {
       id: 'lullaby-lab',
@@ -28,18 +32,17 @@ export default function ProjectShowcase({ onConstellationComplete, dreamModeActi
       title: 'Nightlight Collection',
       tagline: 'Warm Luminescence Against the Dark',
       badge: 'Comfort Craft',
-      description:
-        'Cozy lamps and lanterns that turn darkness into comfort. Each lantern captures a fragment of crescent moonlight enclosed in warm blown glass, casting gentle honey-amber auras that soften shadows without disturbing deep sleep.',
+      description: currentAura.description,
       image: dreamModeActive
         ? `${import.meta.env.BASE_URL}images/pip_dream_lantern_dream_mode.png`
         : `${import.meta.env.BASE_URL}images/pip_dream_lantern.png`,
       alt: 'A glowing crescent moon dream lantern casting cozy warm light',
       specs: [
-        { label: 'Color Temp', value: '2200K Honey Amber' },
-        { label: 'Range', value: 'Cozy Bedside Radius' },
-        { label: 'Aura', value: 'Shadow-dispelling Charm' },
+        { label: 'Color Temp', value: currentAura.fullTemp },
+        { label: 'Range', value: currentAura.range },
+        { label: 'Aura', value: currentAura.aura },
       ],
-      features: ['Crescent glass core', 'Burnished brass frame', 'Flicker-free calming glow'],
+      features: currentAura.features,
     },
     {
       id: 'delivery-routes',
@@ -90,7 +93,13 @@ export default function ProjectShowcase({ onConstellationComplete, dreamModeActi
                 <div className="card-visual-wrapper">
                   <div className="card-image-box">
                     {project.id === 'nightlight-collection' && (
-                      <div className="lantern-ambient-halo" aria-hidden="true" />
+                      <div
+                        className={`lantern-ambient-halo halo-${currentAura.id}`}
+                        style={{
+                          background: `radial-gradient(circle, ${currentAura.haloColor} 0%, ${currentAura.haloSecondary} 45%, transparent 70%)`,
+                        }}
+                        aria-hidden="true"
+                      />
                     )}
                     <img
                       key={`${project.id}-${dreamModeActive ? 'dark' : 'light'}`}
@@ -115,7 +124,13 @@ export default function ProjectShowcase({ onConstellationComplete, dreamModeActi
                   {project.id === 'lullaby-lab' && <LullabyMusicBox />}
 
                   {/* Embed Nightlight Ambience in Nightlight Collection */}
-                  {project.id === 'nightlight-collection' && <NightlightAmbience />}
+                  {project.id === 'nightlight-collection' && (
+                    <NightlightAmbience
+                      selectedIndex={selectedAuraIndex}
+                      onSelectAura={setSelectedAuraIndex}
+                      auras={NIGHTLIGHT_AURAS}
+                    />
+                  )}
 
                   <div className="card-specs">
                     {project.specs.map((spec) => (

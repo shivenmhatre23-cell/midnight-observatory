@@ -1,25 +1,38 @@
 import React, { useState } from 'react';
+import { NIGHTLIGHT_AURAS } from '../data/nightlightAuras';
 
-export default function NightlightAmbience() {
-  const [warmthLevel, setWarmthLevel] = useState(0);
+export default function NightlightAmbience({
+  selectedIndex,
+  onSelectAura,
+  auras = NIGHTLIGHT_AURAS,
+}) {
+  const [internalIndex, setInternalIndex] = useState(0);
+  const isControlled = typeof selectedIndex === 'number' && typeof onSelectAura === 'function';
+  const activeIndex = isControlled ? selectedIndex : internalIndex;
+  const current = auras[activeIndex] || auras[0];
 
-  const levels = [
-    { name: 'Honey Amber', temp: '2200K', desc: 'Bedside Safe Soft Glow', icon: '🌙' },
-    { name: 'Golden Moonbeam', temp: '2400K', desc: 'Calming Slumber Aura', icon: '⭐' },
-    { name: 'Velvet Ember', temp: '1900K', desc: 'Deep Shadow-Dispelling Charm', icon: '🕯️' },
-  ];
-
-  const current = levels[warmthLevel];
+  const handleSelect = (idx) => {
+    if (isControlled) {
+      onSelectAura(idx);
+    } else {
+      setInternalIndex(idx);
+    }
+  };
 
   const cycleWarmth = () => {
-    setWarmthLevel((prev) => (prev + 1) % levels.length);
+    const nextIdx = (activeIndex + 1) % auras.length;
+    handleSelect(nextIdx);
   };
 
   return (
     <div className="nightlight-interactive-widget" role="region" aria-label="Nightlight Luminescence Calibration">
       <div className="nightlight-widget-header">
         <div className="nightlight-aura-indicator">
-          <span className="aura-pulse-dot" aria-hidden="true" />
+          <span
+            className={`aura-pulse-dot pulse-${current.id}`}
+            style={{ backgroundColor: current.pulseColor, boxShadow: `0 0 8px ${current.pulseColor}` }}
+            aria-hidden="true"
+          />
           <span className="aura-mode-label">
             Bedside Aura: <strong>{current.name}</strong>
           </span>
@@ -36,19 +49,26 @@ export default function NightlightAmbience() {
       </div>
 
       <div className="nightlight-glow-bar" role="group" aria-label="Bedside aura modes">
-        {levels.map((lvl, idx) => (
-          <button
-            key={lvl.name}
-            type="button"
-            className={`glow-pill-btn ${idx === warmthLevel ? 'active' : ''}`}
-            onClick={() => setWarmthLevel(idx)}
-            aria-pressed={idx === warmthLevel}
-            aria-label={`${lvl.name} ${lvl.temp}`}
-          >
-            <span className="pill-dot" aria-hidden="true" />
-            <span className="pill-text">{lvl.name}</span>
-          </button>
-        ))}
+        {auras.map((lvl, idx) => {
+          const isSelected = idx === activeIndex;
+          return (
+            <button
+              key={lvl.name}
+              type="button"
+              className={`glow-pill-btn pill-${lvl.id} ${isSelected ? 'active' : ''}`}
+              onClick={() => handleSelect(idx)}
+              aria-pressed={isSelected}
+              aria-label={`${lvl.name} ${lvl.temp}`}
+            >
+              <span
+                className="pill-dot"
+                style={isSelected ? { backgroundColor: lvl.pulseColor, boxShadow: `0 0 6px ${lvl.pulseColor}` } : {}}
+                aria-hidden="true"
+              />
+              <span className="pill-text">{lvl.name}</span>
+            </button>
+          );
+        })}
       </div>
     </div>
   );

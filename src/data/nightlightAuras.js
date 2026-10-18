@@ -1,0 +1,47 @@
+export const NIGHTLIGHT_AURAS = [
+  {
+    id: 'honey-amber',
+    name: 'Honey Amber',
+    temp: '2200K',
+    fullTemp: '2200K Honey Amber',
+    range: 'Cozy Bedside Radius',
+    aura: 'Shadow-dispelling Charm',
+    icon: '🌙',
+    haloColor: 'rgba(243, 201, 107, 0.45)',
+    haloSecondary: 'rgba(244, 214, 215, 0.25)',
+    pulseColor: '#f3c96b',
+    description:
+      'Cozy lamps and lanterns that turn darkness into comfort. Each lantern captures a fragment of crescent moonlight enclosed in warm blown glass, casting gentle honey-amber auras that soften shadows without disturbing deep sleep.',
+    features: ['Crescent glass core', 'Burnished brass frame', 'Flicker-free calming glow'],
+  },
+  {
+    id: 'golden-moonbeam',
+    name: 'Golden Moonbeam',
+    temp: '2400K',
+    fullTemp: '2400K Golden Moonbeam',
+    range: 'Slumber Canopy Radius',
+    aura: 'Calming Slumber Aura',
+    icon: '⭐',
+    haloColor: 'rgba(255, 230, 140, 0.55)',
+    haloSecondary: 'rgba(200, 225, 255, 0.25)',
+    pulseColor: '#ffe48e',
+    description:
+      'A brighter, celestial luminescence reminiscent of midnight moonlight. Infused with refined starlight prisms that cast a soft golden radiance across the room to soothe restless thoughts before drifting away.',
+    features: ['Celestial starlight prism', 'Polished star-silver frame', 'Sustained serene beam'],
+  },
+  {
+    id: 'velvet-ember',
+    name: 'Velvet Ember',
+    temp: '1900K',
+    fullTemp: '1900K Velvet Ember',
+    range: 'Deep Dream Nook Radius',
+    aura: 'Deep Shadow-Dispelling Charm',
+    icon: '🕯️',
+    haloColor: 'rgba(255, 138, 96, 0.50)',
+    haloSecondary: 'rgba(220, 100, 120, 0.25)',
+    pulseColor: '#ff8a60',
+    description:
+      'An ultra-warm, sleepy crimson-amber glow mimicking the gentle dying embers of a hearth. Specially calibrated for deep slumber cycles, dissolving nighttime worries in an intimate, tranquil warmth.',
+    features: ['Smoked topaz glass core', 'Antiqued copper frame', 'Mellow hearthside simmer'],
+  },
+];

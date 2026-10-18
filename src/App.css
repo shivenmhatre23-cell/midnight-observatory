@@ -1213,6 +1213,19 @@ body.dream-mode-active .card-visual-wrapper {
   filter: blur(12px);
   pointer-events: none;
   animation: lanternBreathe 4s ease-in-out infinite alternate;
+  transition: background 0.4s ease;
+}
+
+.lantern-ambient-halo.halo-honey-amber {
+  background: radial-gradient(circle, rgba(243, 201, 107, 0.45) 0%, rgba(244, 214, 215, 0.25) 45%, transparent 70%);
+}
+
+.lantern-ambient-halo.halo-golden-moonbeam {
+  background: radial-gradient(circle, rgba(255, 230, 140, 0.55) 0%, rgba(200, 225, 255, 0.25) 45%, transparent 70%);
+}
+
+.lantern-ambient-halo.halo-velvet-ember {
+  background: radial-gradient(circle, rgba(255, 138, 96, 0.50) 0%, rgba(220, 100, 120, 0.25) 45%, transparent 70%);
 }
 
 @keyframes lanternBreathe {
@@ -1469,9 +1482,45 @@ body.dream-mode-active .btn-cycle-warmth {
   font-weight: 700;
 }
 
+.glow-pill-btn.active.pill-honey-amber {
+  border-color: #f3c96b;
+  background-color: rgba(243, 201, 107, 0.18);
+}
+
+.glow-pill-btn.active.pill-golden-moonbeam {
+  border-color: #ffe48e;
+  background-color: rgba(255, 228, 142, 0.22);
+}
+
+.glow-pill-btn.active.pill-velvet-ember {
+  border-color: #ff8a60;
+  background-color: rgba(255, 138, 96, 0.2);
+}
+
 body.dream-mode-active .glow-pill-btn.active {
   background-color: rgba(243, 201, 107, 0.2);
   color: var(--dream-gold);
+}
+
+body.dream-mode-active .glow-pill-btn.active.pill-honey-amber {
+  background-color: rgba(243, 201, 107, 0.25);
+  color: #f3c96b;
+}
+
+body.dream-mode-active .glow-pill-btn.active.pill-golden-moonbeam {
+  background-color: rgba(255, 228, 142, 0.25);
+  color: #ffe48e;
+}
+
+body.dream-mode-active .glow-pill-btn.active.pill-velvet-ember {
+  background-color: rgba(255, 138, 96, 0.25);
+  color: #ff9e7d;
+}
+
+.btn-cycle-warmth:focus-visible,
+.glow-pill-btn:focus-visible {
+  outline: 2px solid var(--dream-gold);
+  outline-offset: 2px;
 }
 
 .glow-pill-btn .pill-dot {
