@@ -98,6 +98,8 @@ export default function Hero({ dreamModeActive = false, visitorLogbook = null })
               width="500"
               height="500"
               loading="eager"
+              fetchPriority="high"
+              decoding="async"
             />
             <div className="character-caption-tag">
               <span className="caption-dot"></span>

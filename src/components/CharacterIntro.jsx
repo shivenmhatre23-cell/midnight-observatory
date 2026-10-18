@@ -60,6 +60,7 @@ export default function CharacterIntro({ dreamModeActive = false }) {
                   width="440"
                   height="440"
                   loading="lazy"
+                  decoding="async"
                 />
               </div>
               <div className="portrait-meta">

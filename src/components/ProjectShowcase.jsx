@@ -97,7 +97,10 @@ export default function ProjectShowcase({ onConstellationComplete, dreamModeActi
                       src={project.image}
                       alt={project.alt}
                       className="card-artwork theme-fade-img"
+                      width="480"
+                      height="320"
                       loading="lazy"
+                      decoding="async"
                     />
                   </div>
                   <div className="card-top-tag">{project.badge}</div>

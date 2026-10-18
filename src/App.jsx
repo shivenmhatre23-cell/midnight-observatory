@@ -41,23 +41,24 @@ function App() {
 
   const visitorLogbook = useVisitorLogbook();
 
-  // Preload light and dark assets for seamless crossfade
+  // Defer preloading alternate theme hero asset during browser idle time
   useEffect(() => {
-    const imagesToPreload = [
-      `${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`,
-      `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.png`,
-      `${import.meta.env.BASE_URL}images/pip_portrait.png`,
-      `${import.meta.env.BASE_URL}images/pip_portrait_dream_mode.png`,
-      `${import.meta.env.BASE_URL}images/pip_lullaby_box.png`,
-      `${import.meta.env.BASE_URL}images/pip_lullaby_box_dream_mode.png`,
-      `${import.meta.env.BASE_URL}images/pip_dream_lantern.png`,
-      `${import.meta.env.BASE_URL}images/pip_dream_lantern_dream_mode.png`,
-    ];
-    imagesToPreload.forEach((src) => {
+    const preloadAlternateHero = () => {
+      const altHeroSrc = dreamModeActive
+        ? `${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`
+        : `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.png`;
       const img = new Image();
-      img.src = src;
-    });
-  }, []);
+      img.src = altHeroSrc;
+    };
+
+    if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+      const handle = window.requestIdleCallback(preloadAlternateHero, { timeout: 2500 });
+      return () => window.cancelIdleCallback(handle);
+    } else {
+      const timer = setTimeout(preloadAlternateHero, 1200);
+      return () => clearTimeout(timer);
+    }
+  }, [dreamModeActive]);
 
   useEffect(() => {
     if (dreamModeActive) {

@@ -325,6 +325,8 @@ export default function StarlightTelegraph({
                   className="telegraph-speaker-img"
                   width="130"
                   height="130"
+                  loading="lazy"
+                  decoding="async"
                 />
                 <div className="telegraph-callsign-pill">
                   <span className="callsign-sparkle" aria-hidden="true">✦</span>
