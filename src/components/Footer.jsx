@@ -135,6 +135,7 @@ export default function Footer({
                 <li><a href="#about">Custodian Profile</a></li>
                 <li><a href="#showcase">Project Workshop</a></li>
                 <li><a href="#story">Origin Chronicles</a></li>
+                <li><a href="#attributions">Credits & Art Sources</a></li>
               </ul>
             </div>
 
@@ -146,6 +147,34 @@ export default function Footer({
                 <li><span>Zephyr Wind Maps</span></li>
                 <li><button type="button" onClick={scrollToTop} className="back-to-top-btn">↑ Back to Stars</button></li>
               </ul>
+            </div>
+          </div>
+        </div>
+
+        {/* Visible Attribution & Credits Box */}
+        <div className="footer-credits-box" id="attributions" role="region" aria-label="Attribution and Credits">
+          <div className="credits-header">
+            <span className="credits-star" aria-hidden="true">✦</span>
+            <h5 className="credits-title">Attributions & Acknowledgments</h5>
+          </div>
+          <div className="credits-grid">
+            <div className="credit-category">
+              <span className="credit-label">🎨 Character & Artwork</span>
+              <p className="credit-text">
+                Official <em>Pip the Skull Baby</em> character identity, lore, and artwork assets provided by the <strong>haX.baby Track 1 Creator Pack</strong>.
+              </p>
+            </div>
+            <div className="credit-category">
+              <span className="credit-label">🎵 Sound & Audio</span>
+              <p className="credit-text">
+                Original pentatonic bedtime chimes and harmonic overtone dampening synthesized procedurally via the native browser <strong>Web Audio API</strong> (no third-party audio files).
+              </p>
+            </div>
+            <div className="credit-category">
+              <span className="credit-label">🛠️ Libraries & Craft</span>
+              <p className="credit-text">
+                Built with <strong>React 19</strong>, <strong>Vite 8</strong>, <strong>Lucide React</strong> (icons), <strong>Motion</strong> (spring micro-interactions), and <strong>Canvas Confetti</strong> (starlight completion).
+              </p>
             </div>
           </div>
         </div>
