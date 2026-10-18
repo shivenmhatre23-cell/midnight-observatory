@@ -36,6 +36,26 @@ export default function StoryPreview() {
     },
   ];
 
+  const handleTabClick = (idx, sceneId) => {
+    setActiveTab(idx);
+    const cardEl = document.getElementById(`story-card-${sceneId}`);
+    if (cardEl) {
+      const prefersReducedMotion =
+        typeof window !== 'undefined' &&
+        window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const navHeader = document.querySelector('.navbar-header');
+      const navHeight = navHeader ? navHeader.getBoundingClientRect().height : 60;
+      const elementPosition = cardEl.getBoundingClientRect().top;
+      const offsetPosition = elementPosition + window.pageYOffset - (navHeight + 20);
+
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: prefersReducedMotion ? 'auto' : 'smooth',
+      });
+    }
+  };
+
   return (
     <section className="story-section" id="story">
       <div className="container">
@@ -55,8 +75,9 @@ export default function StoryPreview() {
               type="button"
               role="tab"
               aria-selected={activeTab === idx}
+              aria-controls={`story-card-${scene.id}`}
               className={`story-tab-btn ${activeTab === idx ? 'active' : ''}`}
-              onClick={() => setActiveTab(idx)}
+              onClick={() => handleTabClick(idx, scene.id)}
             >
               <span className="tab-icon" aria-hidden="true">{scene.icon}</span>
               <span className="tab-title-text">{scene.title}</span>
@@ -69,6 +90,7 @@ export default function StoryPreview() {
           {scenes.map((scene, idx) => (
             <article
               key={scene.id}
+              id={`story-card-${scene.id}`}
               className={`story-card ${activeTab === idx ? 'highlighted' : ''}`}
             >
               <div className="story-card-header">

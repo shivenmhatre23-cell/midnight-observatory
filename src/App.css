@@ -1114,11 +1114,12 @@ body.dream-mode-active .story-section {
   flex-direction: column;
   position: relative;
   transition: all 0.3s ease;
+  scroll-margin-top: 5.5rem;
 }
 
 .story-card.highlighted {
   border-color: var(--dream-gold);
-  box-shadow: 0 10px 30px rgba(243, 201, 107, 0.25);
+  box-shadow: 0 10px 30px rgba(243, 201, 107, 0.3);
   transform: translateY(-4px);
 }
 
