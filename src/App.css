@@ -864,6 +864,7 @@ body.dream-mode-active .note-text {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2rem;
+  align-items: start;
 }
 
 .project-card {
@@ -886,12 +887,14 @@ body.dream-mode-active .note-text {
 .card-visual-wrapper {
   position: relative;
   background: linear-gradient(180deg, #fbf2eb 0%, #f6e6ec 100%);
-  padding: 1.5rem;
+  padding: 1.25rem 1rem;
   border-bottom: 1px solid var(--border-soft);
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 250px;
+  height: 220px;
+  box-sizing: border-box;
+  overflow: hidden;
 }
 
 body.dream-mode-active .card-visual-wrapper {
@@ -900,21 +903,46 @@ body.dream-mode-active .card-visual-wrapper {
 
 .card-image-box {
   width: 100%;
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
 
 .card-artwork {
-  max-height: 200px;
+  max-height: 175px;
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.1));
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.1));
   transition: transform 0.3s ease;
 }
 
 .project-card:hover .card-artwork {
   transform: scale(1.04);
+}
+
+/* Nightlight ambient glow halo for Card 2 */
+.lantern-ambient-halo {
+  position: absolute;
+  width: 190px;
+  height: 190px;
+  background: radial-gradient(circle, rgba(243, 201, 107, 0.45) 0%, rgba(244, 214, 215, 0.25) 45%, transparent 70%);
+  border-radius: 50%;
+  filter: blur(12px);
+  pointer-events: none;
+  animation: lanternBreathe 4s ease-in-out infinite alternate;
+}
+
+@keyframes lanternBreathe {
+  0% {
+    transform: scale(0.92);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.08);
+    opacity: 1;
+  }
 }
 
 .card-top-tag {
@@ -967,19 +995,19 @@ body.dream-mode-active .card-top-tag {
 }
 
 .card-body {
-  padding: 1.75rem;
+  padding: 1.5rem;
   display: flex;
   flex-direction: column;
-  flex: 1;
 }
 
 .card-tagline {
-  font-size: 0.8rem;
-  font-weight: 700;
+  font-size: 0.75rem;
+  font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.08em;
   color: var(--berry);
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.35rem;
+  min-height: 1.1rem;
 }
 
 body.dream-mode-active .card-tagline {
@@ -987,26 +1015,28 @@ body.dream-mode-active .card-tagline {
 }
 
 .card-title {
-  font-size: 1.55rem;
-  margin-bottom: 0.85rem;
+  font-size: 1.45rem;
+  margin-bottom: 0.65rem;
+  line-height: 1.2;
 }
 
 .card-description {
-  font-size: 0.95rem;
+  font-size: 0.92rem;
   color: var(--text-muted);
-  line-height: 1.6;
-  margin-bottom: 1.5rem;
+  line-height: 1.55;
+  margin-bottom: 0.75rem;
 }
 
 .card-specs {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 0.5rem;
+  gap: 0.45rem;
   background-color: var(--bg-card-subtle);
   border: 1px solid var(--border-soft);
   border-radius: var(--radius-sm);
-  padding: 0.85rem;
-  margin-bottom: 1.25rem;
+  padding: 0.75rem 0.85rem;
+  margin-top: 0.85rem;
+  margin-bottom: 0.85rem;
 }
 
 .spec-item {
@@ -1028,10 +1058,10 @@ body.dream-mode-active .card-tagline {
 
 .card-features-list {
   list-style: none;
-  margin-top: auto;
+  margin-top: 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: 0.35rem;
 }
 
 .feature-item {
@@ -1045,6 +1075,192 @@ body.dream-mode-active .card-tagline {
 .feature-bullet {
   color: var(--dream-gold);
   font-size: 0.75rem;
+}
+
+/* --------------------------------------------------------------------------
+   Card 2: Nightlight Luminescence Ambience Widget
+   -------------------------------------------------------------------------- */
+.nightlight-interactive-widget {
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-gold);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  margin: 0.4rem 0;
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+body.dream-mode-active .nightlight-interactive-widget {
+  background: rgba(34, 38, 63, 0.75);
+}
+
+.nightlight-widget-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.nightlight-aura-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.78rem;
+  color: var(--text-main);
+}
+
+.aura-pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--dream-gold);
+  box-shadow: 0 0 8px var(--dream-gold);
+  animation: auraBreathe 2s ease-in-out infinite alternate;
+}
+
+@keyframes auraBreathe {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.2);
+    opacity: 1;
+  }
+}
+
+.btn-cycle-warmth {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  background: linear-gradient(135deg, var(--berry), var(--berry-dark));
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  transition: all 0.2s ease;
+}
+
+.btn-cycle-warmth:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(163, 64, 99, 0.3);
+}
+
+body.dream-mode-active .btn-cycle-warmth {
+  background: linear-gradient(135deg, var(--berry), var(--midnight));
+  border: 1px solid var(--border-gold);
+}
+
+.nightlight-glow-bar {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.glow-pill-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.45rem;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.glow-pill-btn:hover {
+  border-color: var(--berry);
+  color: var(--text-heading);
+}
+
+.glow-pill-btn.active {
+  border-color: var(--dream-gold);
+  background-color: var(--dream-gold-soft);
+  color: var(--cocoa);
+  font-weight: 700;
+}
+
+body.dream-mode-active .glow-pill-btn.active {
+  background-color: rgba(243, 201, 107, 0.2);
+  color: var(--dream-gold);
+}
+
+.glow-pill-btn .pill-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--dream-gold);
+}
+
+/* --------------------------------------------------------------------------
+   Card 3: Unified Telescope Visual & Instruction Styles
+   -------------------------------------------------------------------------- */
+.telescope-visual-wrapper {
+  padding: 0;
+  background: #151726;
+  position: relative;
+}
+
+.telescope-visual-wrapper .telescope-canvas-wrapper {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+  box-shadow: inset 0 0 25px rgba(0, 0, 0, 0.5);
+}
+
+.telescope-visual-wrapper .telescope-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.telescope-visual-wrapper .telescope-status-pill {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  background: rgba(21, 23, 38, 0.88);
+  backdrop-filter: blur(4px);
+  border: 1px solid rgba(243, 201, 107, 0.4);
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--dream-gold);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+.telescope-instructions-box {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  margin-bottom: 0.5rem;
+}
+
+.telescope-instructions-icon {
+  font-size: 1rem;
+}
+
+.telescope-instructions-box .telescope-instructions {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+  margin: 0;
 }
 
 /* --------------------------------------------------------------------------
@@ -2005,10 +2221,10 @@ body.dream-mode-active .constellation-nav-btn.next-target:not(.active) {
   background-color: var(--bg-card);
   border: 1.5px solid var(--border-gold);
   border-radius: var(--radius-md);
-  padding: 1.25rem;
+  padding: 0.95rem;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.65rem;
   box-shadow: var(--shadow-sm);
   scroll-margin-top: 90px;
   transition: border-color 0.25s ease, background-color 0.25s ease;
@@ -2382,12 +2598,12 @@ body.dream-mode-active .counter-current {
   background: var(--bg-card-subtle);
   border: 1px solid var(--border-gold);
   border-radius: var(--radius-md);
-  padding: 1.15rem;
-  margin: 1rem 0;
+  padding: 0.85rem;
+  margin: 0.4rem 0;
   box-shadow: var(--shadow-sm);
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
+  gap: 0.65rem;
 }
 
 body.dream-mode-active .lullaby-interactive-widget {

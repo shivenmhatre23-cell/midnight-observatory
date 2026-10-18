@@ -68,7 +68,7 @@ const STARS = [
   },
 ];
 
-export default function ConstellationTelescope({ onConstellationComplete }) {
+export default function ConstellationTelescope({ project, onConstellationComplete }) {
   const [selectedStars, setSelectedStars] = useState([]);
   const [activeStarIndex, setActiveStarIndex] = useState(0);
   const [feedback, setFeedback] = useState({
@@ -213,32 +213,9 @@ export default function ConstellationTelescope({ onConstellationComplete }) {
       });
     }
   }
-
-  return (
-    <div className="constellation-telescope-card" role="region" aria-label="Interactive Constellation Telescope">
-      {/* Telescope Header */}
-      <div className="telescope-header">
-        <div className="telescope-title-wrap">
-          <span className="telescope-icon" aria-hidden="true">🔭</span>
-          <h4 className="telescope-title">Celestial Telescope</h4>
-        </div>
-        <div className="telescope-status-pill">
-          <span className="status-dot-sparkle" aria-hidden="true">
-            {isCompleted ? '★' : '✦'}
-          </span>
-          <span className="status-text">
-            {isCompleted ? 'Constellation Complete' : `Progress: ${selectedStars.length} of ${STARS.length}`}
-          </span>
-        </div>
-      </div>
-
-      <p className="telescope-instructions">
-        Chart Pip’s nocturnal delivery skiff by connecting stars in order: <strong>1 → 2 → 3 → 4 → 5</strong>.
-      </p>
-
-      {/* Interactive SVG Canvas */}
-      <div className="telescope-canvas-wrapper">
-        <svg
+  const canvasElement = (
+    <div className="telescope-canvas-wrapper">
+      <svg
           viewBox="0 0 400 280"
           className={`telescope-svg ${isCompleted ? 'completed' : ''}`}
           role="img"
@@ -390,7 +367,10 @@ export default function ConstellationTelescope({ onConstellationComplete }) {
           </div>
         )}
       </div>
+  );
 
+  const controlsElement = (
+    <>
       {/* Constellation Waypoint Quick-Jump Navigation Bar */}
       <div
         className="constellation-nav-bar"
@@ -562,6 +542,88 @@ export default function ConstellationTelescope({ onConstellationComplete }) {
           <span aria-hidden="true">↺</span> Reset Skyway
         </button>
       </div>
+    </>
+  );
+
+  if (project) {
+    return (
+      <article
+        className="project-card project-card-telescope"
+        role="region"
+        aria-label="Interactive Constellation Telescope"
+      >
+        <div className="card-visual-wrapper telescope-visual-wrapper">
+          {canvasElement}
+          <div className="card-top-tag">{project.badge}</div>
+          <div className="telescope-status-pill">
+            <span className="status-dot-sparkle" aria-hidden="true">
+              {isCompleted ? '★' : '✦'}
+            </span>
+            <span className="status-text">
+              {isCompleted ? 'Skyway Linked' : `Progress: ${selectedStars.length} of ${STARS.length}`}
+            </span>
+          </div>
+        </div>
+
+        <div className="card-body">
+          <span className="card-tagline">{project.tagline}</span>
+          <h3 className="card-title">{project.title}</h3>
+          <p className="card-description">{project.description}</p>
+
+          <div className="telescope-instructions-box">
+            <span className="telescope-instructions-icon" aria-hidden="true">🔭</span>
+            <p className="telescope-instructions">
+              Connect route stars in skyway order: <strong>1 → 2 → 3 → 4 → 5</strong>
+            </p>
+          </div>
+
+          {controlsElement}
+
+          <div className="card-specs">
+            {project.specs.map((spec) => (
+              <div key={spec.label} className="spec-item">
+                <span className="spec-label">{spec.label}</span>
+                <span className="spec-val">{spec.value}</span>
+              </div>
+            ))}
+          </div>
+
+          <ul className="card-features-list">
+            {project.features.map((item, idx) => (
+              <li key={idx} className="feature-item">
+                <span className="feature-bullet" aria-hidden="true">✦</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </article>
+    );
+  }
+
+  return (
+    <div className="constellation-telescope-card" role="region" aria-label="Interactive Constellation Telescope">
+      <div className="telescope-header">
+        <div className="telescope-title-wrap">
+          <span className="telescope-icon" aria-hidden="true">🔭</span>
+          <h4 className="telescope-title">Celestial Telescope</h4>
+        </div>
+        <div className="telescope-status-pill">
+          <span className="status-dot-sparkle" aria-hidden="true">
+            {isCompleted ? '★' : '✦'}
+          </span>
+          <span className="status-text">
+            {isCompleted ? 'Constellation Complete' : `Progress: ${selectedStars.length} of ${STARS.length}`}
+          </span>
+        </div>
+      </div>
+
+      <p className="telescope-instructions">
+        Chart Pip’s nocturnal delivery skiff by connecting stars in order: <strong>1 → 2 → 3 → 4 → 5</strong>.
+      </p>
+
+      {canvasElement}
+      {controlsElement}
     </div>
   );
 }

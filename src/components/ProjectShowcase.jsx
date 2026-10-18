@@ -1,6 +1,7 @@
 import React from 'react';
 import LullabyMusicBox from './LullabyMusicBox';
 import ConstellationTelescope from './ConstellationTelescope';
+import NightlightAmbience from './NightlightAmbience';
 
 export default function ProjectShowcase({ onConstellationComplete, dreamModeActive = false }) {
   const projects = [
@@ -70,13 +71,27 @@ export default function ProjectShowcase({ onConstellationComplete, dreamModeActi
         </div>
 
         <div className="showcase-grid">
-          {projects.map((project) => (
-            <article key={project.id} className="project-card">
-              <div className="card-visual-wrapper">
-                {project.isInteractiveTelescope ? (
-                  <ConstellationTelescope onConstellationComplete={onConstellationComplete} />
-                ) : (
+          {projects.map((project) => {
+            if (project.isInteractiveTelescope) {
+              return (
+                <ConstellationTelescope
+                  key={project.id}
+                  project={project}
+                  onConstellationComplete={onConstellationComplete}
+                />
+              );
+            }
+
+            return (
+              <article
+                key={project.id}
+                className={`project-card ${project.id === 'nightlight-collection' ? 'project-card-nightlight' : ''}`}
+              >
+                <div className="card-visual-wrapper">
                   <div className="card-image-box">
+                    {project.id === 'nightlight-collection' && (
+                      <div className="lantern-ambient-halo" aria-hidden="true" />
+                    )}
                     <img
                       key={`${project.id}-${dreamModeActive ? 'dark' : 'light'}`}
                       src={project.image}
@@ -85,38 +100,41 @@ export default function ProjectShowcase({ onConstellationComplete, dreamModeActi
                       loading="lazy"
                     />
                   </div>
-                )}
-                <div className="card-top-tag">{project.badge}</div>
-              </div>
-
-              <div className="card-body">
-                <span className="card-tagline">{project.tagline}</span>
-                <h3 className="card-title">{project.title}</h3>
-                <p className="card-description">{project.description}</p>
-
-                {/* Embed Playable Web Audio Music Box in Lullaby Lab */}
-                {project.id === 'lullaby-lab' && <LullabyMusicBox />}
-
-                <div className="card-specs">
-                  {project.specs.map((spec) => (
-                    <div key={spec.label} className="spec-item">
-                      <span className="spec-label">{spec.label}</span>
-                      <span className="spec-val">{spec.value}</span>
-                    </div>
-                  ))}
+                  <div className="card-top-tag">{project.badge}</div>
                 </div>
 
-                <ul className="card-features-list">
-                  {project.features.map((item, idx) => (
-                    <li key={idx} className="feature-item">
-                      <span className="feature-bullet" aria-hidden="true">✦</span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </article>
-          ))}
+                <div className="card-body">
+                  <span className="card-tagline">{project.tagline}</span>
+                  <h3 className="card-title">{project.title}</h3>
+                  <p className="card-description">{project.description}</p>
+
+                  {/* Embed Playable Web Audio Music Box in Lullaby Lab */}
+                  {project.id === 'lullaby-lab' && <LullabyMusicBox />}
+
+                  {/* Embed Nightlight Ambience in Nightlight Collection */}
+                  {project.id === 'nightlight-collection' && <NightlightAmbience />}
+
+                  <div className="card-specs">
+                    {project.specs.map((spec) => (
+                      <div key={spec.label} className="spec-item">
+                        <span className="spec-label">{spec.label}</span>
+                        <span className="spec-val">{spec.value}</span>
+                      </div>
+                    ))}
+                  </div>
+
+                  <ul className="card-features-list">
+                    {project.features.map((item, idx) => (
+                      <li key={idx} className="feature-item">
+                        <span className="feature-bullet" aria-hidden="true">✦</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>
