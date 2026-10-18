@@ -2863,6 +2863,453 @@ body.dream-mode-active .chime-pin.pin-active .pin-name {
 }
 
 /* --------------------------------------------------------------------------
+   Starlight Telegraph Section
+   -------------------------------------------------------------------------- */
+.starlight-telegraph-section {
+  padding: 5rem 0;
+  background: rgba(255, 248, 241, 0.45);
+  border-top: 1px solid var(--border-soft);
+  transition: background-color 0.3s ease;
+}
+
+body.dream-mode-active .starlight-telegraph-section {
+  background: rgba(22, 24, 41, 0.55);
+  border-color: rgba(243, 201, 107, 0.15);
+}
+
+.telegraph-console-card {
+  max-width: 860px;
+  margin: 0 auto;
+  background: #ffffff;
+  border: 2px solid rgba(163, 64, 99, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 12px 36px rgba(44, 43, 60, 0.08);
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+body.dream-mode-active .telegraph-console-card {
+  background: #1c223c;
+  border-color: rgba(243, 201, 107, 0.3);
+  box-shadow: 0 16px 44px rgba(0, 0, 0, 0.45);
+}
+
+/* Header bar */
+.telegraph-header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.85rem 1.4rem;
+  background: rgba(163, 64, 99, 0.08);
+  border-bottom: 1.5px solid rgba(163, 64, 99, 0.15);
+  gap: 1rem;
+}
+
+body.dream-mode-active .telegraph-header-bar {
+  background: rgba(34, 38, 63, 0.8);
+  border-color: rgba(243, 201, 107, 0.2);
+}
+
+.telegraph-frequency-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.telegraph-signal-pulse {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #2ecc71;
+  box-shadow: 0 0 8px #2ecc71;
+  animation: pulse 2s infinite ease-in-out;
+}
+
+body.dream-mode-active .telegraph-signal-pulse {
+  background: var(--dream-gold);
+  box-shadow: 0 0 10px var(--dream-gold);
+}
+
+.telegraph-status-text {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--berry);
+}
+
+body.dream-mode-active .telegraph-status-text {
+  color: var(--dream-gold);
+}
+
+.telegraph-controls-meta {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+}
+
+.telegraph-transmissions-count {
+  font-size: 0.8rem;
+  color: var(--cocoa);
+  opacity: 0.85;
+}
+
+body.dream-mode-active .telegraph-transmissions-count {
+  color: #ebdacf;
+}
+
+.btn-skip-typing {
+  background: rgba(163, 64, 99, 0.1);
+  border: 1px solid rgba(163, 64, 99, 0.25);
+  border-radius: var(--radius-sm);
+  color: var(--berry);
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 0.25rem 0.55rem;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.btn-skip-typing:hover {
+  background: var(--berry);
+  color: #ffffff;
+}
+
+body.dream-mode-active .btn-skip-typing {
+  background: rgba(243, 201, 107, 0.15);
+  border-color: rgba(243, 201, 107, 0.35);
+  color: var(--dream-gold);
+}
+
+body.dream-mode-active .btn-skip-typing:hover {
+  background: var(--dream-gold);
+  color: var(--night-sky);
+}
+
+/* Dialogue stage */
+.telegraph-stage {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  padding: 1.5rem;
+  gap: 1.5rem;
+}
+
+.telegraph-speaker-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.telegraph-speaker-frame {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5rem;
+  background: rgba(255, 248, 241, 0.8);
+  border: 2px solid var(--dream-gold);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+body.dream-mode-active .telegraph-speaker-frame {
+  background: rgba(34, 38, 63, 0.6);
+  border-color: var(--dream-gold);
+}
+
+.telegraph-speaker-img {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  background: #1c223c;
+}
+
+.telegraph-callsign-pill {
+  margin-top: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.75rem;
+  background: var(--berry);
+  color: #ffffff;
+  border-radius: var(--radius-full);
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+body.dream-mode-active .telegraph-callsign-pill {
+  background: var(--dream-gold);
+  color: var(--night-sky);
+}
+
+/* Transmission Readout */
+.telegraph-message-column {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.telegraph-message-bubble {
+  position: relative;
+  background: #faf6f0;
+  border: 1.5px solid rgba(163, 64, 99, 0.2);
+  border-radius: var(--radius-md);
+  padding: 1.1rem 1.25rem;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.03);
+}
+
+body.dream-mode-active .telegraph-message-bubble {
+  background: rgba(34, 38, 63, 0.5);
+  border-color: rgba(243, 201, 107, 0.25);
+}
+
+.telegraph-tape-edge {
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: var(--berry);
+  opacity: 0.6;
+  margin-bottom: 0.6rem;
+  user-select: none;
+}
+
+body.dream-mode-active .telegraph-tape-edge {
+  color: var(--dream-gold);
+  opacity: 0.7;
+}
+
+.telegraph-message-text {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--night-sky);
+  margin: 0;
+  min-height: 3.5rem;
+}
+
+body.dream-mode-active .telegraph-message-text {
+  color: #fff8f1;
+}
+
+.telegraph-cursor {
+  display: inline-block;
+  color: var(--berry);
+  animation: pulse 0.7s infinite;
+  margin-left: 2px;
+}
+
+body.dream-mode-active .telegraph-cursor {
+  color: var(--dream-gold);
+}
+
+/* Prescription Card */
+.prescription-card {
+  margin-top: 1rem;
+  background: #ffffff;
+  border: 1.5px dashed var(--berry);
+  border-radius: var(--radius-md);
+  padding: 0.85rem 1rem;
+  box-shadow: 0 4px 12px rgba(163, 64, 99, 0.08);
+}
+
+body.dream-mode-active .prescription-card {
+  background: rgba(22, 24, 41, 0.85);
+  border-color: var(--dream-gold);
+}
+
+.prescription-header {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-bottom: 0.45rem;
+}
+
+.prescription-badge {
+  font-size: 0.72rem;
+  font-weight: 800;
+  background: var(--berry);
+  color: #ffffff;
+  padding: 0.15rem 0.5rem;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+}
+
+body.dream-mode-active .prescription-badge {
+  background: var(--dream-gold);
+  color: var(--night-sky);
+}
+
+.prescription-title {
+  font-family: var(--font-serif);
+  font-size: 1.05rem;
+  color: var(--berry);
+}
+
+body.dream-mode-active .prescription-title {
+  color: var(--dream-gold);
+}
+
+.prescription-essence {
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--cocoa);
+  font-style: italic;
+  margin: 0 0 0.5rem 0;
+}
+
+body.dream-mode-active .prescription-essence {
+  color: #ebdacf;
+}
+
+.prescription-dosage {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.82rem;
+  color: var(--berry);
+  background: rgba(163, 64, 99, 0.06);
+  padding: 0.35rem 0.65rem;
+  border-radius: var(--radius-sm);
+}
+
+body.dream-mode-active .prescription-dosage {
+  color: var(--dream-gold);
+  background: rgba(243, 201, 107, 0.1);
+}
+
+/* Choice Buttons */
+.telegraph-choices-area {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.choices-eyebrow {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--berry);
+  opacity: 0.85;
+}
+
+body.dream-mode-active .choices-eyebrow {
+  color: var(--dream-gold);
+}
+
+.telegraph-choices-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.45rem;
+}
+
+.btn-telegraph-choice {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-align: left;
+  background: #ffffff;
+  border: 1.5px solid rgba(163, 64, 99, 0.2);
+  border-radius: var(--radius-md);
+  padding: 0.65rem 1rem;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--cocoa);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-telegraph-choice:hover,
+.btn-telegraph-choice:focus-visible {
+  border-color: var(--berry);
+  background: rgba(163, 64, 99, 0.06);
+  color: var(--berry);
+  transform: translateX(4px);
+  outline: none;
+}
+
+body.dream-mode-active .btn-telegraph-choice {
+  background: rgba(34, 38, 63, 0.6);
+  border-color: rgba(243, 201, 107, 0.25);
+  color: #fff8f1;
+}
+
+body.dream-mode-active .btn-telegraph-choice:hover,
+body.dream-mode-active .btn-telegraph-choice:focus-visible {
+  border-color: var(--dream-gold);
+  background: rgba(243, 201, 107, 0.12);
+  color: var(--dream-gold);
+}
+
+.choice-arrow {
+  opacity: 0.5;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.btn-telegraph-choice:hover .choice-arrow,
+.btn-telegraph-choice:focus-visible .choice-arrow {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+/* Footer plate */
+.telegraph-footer-plate {
+  padding: 0.65rem 1.4rem;
+  background: rgba(0, 0, 0, 0.03);
+  border-top: 1px solid rgba(163, 64, 99, 0.1);
+  text-align: center;
+}
+
+body.dream-mode-active .telegraph-footer-plate {
+  background: rgba(0, 0, 0, 0.2);
+  border-color: rgba(243, 201, 107, 0.12);
+}
+
+.telegraph-disclaimer {
+  font-size: 0.72rem;
+  color: var(--cocoa);
+  opacity: 0.75;
+}
+
+body.dream-mode-active .telegraph-disclaimer {
+  color: #ebdacf;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 680px) {
+  .telegraph-stage {
+    grid-template-columns: 1fr;
+    gap: 1.15rem;
+    padding: 1.15rem;
+  }
+
+  .telegraph-speaker-column {
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .telegraph-speaker-frame {
+    flex-direction: row;
+    gap: 0.75rem;
+    padding: 0.4rem 0.85rem;
+  }
+
+  .telegraph-speaker-img {
+    width: 64px;
+    height: 64px;
+  }
+
+  .telegraph-callsign-pill {
+    margin-top: 0;
+  }
+
+  .btn-telegraph-choice {
+    font-size: 0.82rem;
+    padding: 0.55rem 0.85rem;
+  }
+}
+
+/* --------------------------------------------------------------------------
    Dream Drop Form Section
    -------------------------------------------------------------------------- */
 .dream-drop-section {

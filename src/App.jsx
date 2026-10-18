@@ -5,6 +5,7 @@ import CharacterIntro from './components/CharacterIntro';
 import ProjectShowcase from './components/ProjectShowcase';
 import DreamDeliveryMap from './components/DreamDeliveryMap';
 import StoryPreview from './components/StoryPreview';
+import StarlightTelegraph from './components/StarlightTelegraph';
 import DreamDropForm from './components/DreamDropForm';
 import FallingDreamsGame from './components/FallingDreamsGame';
 import Footer from './components/Footer';
@@ -124,6 +125,14 @@ function App() {
 
         {/* Origin Story Preview Section */}
         <StoryPreview />
+
+        {/* Starlight Telegraph Dialogue Console */}
+        <StarlightTelegraph
+          dreamModeActive={dreamModeActive}
+          soundEnabled={soundEnabled}
+          onPlayChime={playConstellationSound}
+          highScore={visitorLogbook.highScore}
+        />
 
         {/* Ephemeral Dream Drop Form Section */}
         <DreamDropForm onDreamSubmitted={playDreamSubmittedSound} />

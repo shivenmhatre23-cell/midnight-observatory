@@ -15,6 +15,7 @@ export default function Navbar({ onToggleDreamMode, dreamModeActive }) {
     { label: 'Dream Works', href: '#showcase' },
     { label: 'Flight Map', href: '#flight-map' },
     { label: 'Origin Story', href: '#story' },
+    { label: 'Telegraph', href: '#starlight-telegraph' },
     { label: 'Whisper a Dream', href: '#dream-drop' },
   ];
 
