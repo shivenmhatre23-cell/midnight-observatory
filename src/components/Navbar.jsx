@@ -13,6 +13,7 @@ export default function Navbar({ onToggleDreamMode, dreamModeActive }) {
   const navLinks = [
     { label: 'About Pip', href: '#about' },
     { label: 'Dream Works', href: '#showcase' },
+    { label: 'Flight Map', href: '#flight-map' },
     { label: 'Origin Story', href: '#story' },
     { label: 'Whisper a Dream', href: '#dream-drop' },
   ];

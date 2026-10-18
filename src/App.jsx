@@ -3,6 +3,7 @@ import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import CharacterIntro from './components/CharacterIntro';
 import ProjectShowcase from './components/ProjectShowcase';
+import DreamDeliveryMap from './components/DreamDeliveryMap';
 import StoryPreview from './components/StoryPreview';
 import DreamDropForm from './components/DreamDropForm';
 import Footer from './components/Footer';
@@ -103,6 +104,13 @@ function App() {
         {/* Project Showcase Section */}
         <ProjectShowcase
           onConstellationComplete={playConstellationSound}
+          dreamModeActive={dreamModeActive}
+        />
+
+        {/* Dream Delivery Flight Map Section (Phase 7) */}
+        <DreamDeliveryMap
+          soundEnabled={soundEnabled}
+          onPlayDeliverySound={playDreamSubmittedSound}
           dreamModeActive={dreamModeActive}
         />
 

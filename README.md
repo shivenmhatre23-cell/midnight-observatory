@@ -18,31 +18,37 @@ Starring **Pip**, the official sleepy, gentle Skull Baby and Junior Dream Engine
 - **Reward**: Completing the constellation draws a glowing celestial loop and reveals a heartwarming thank-you note from Pip. Includes an instant **Reset Skyway** button.
 - **Accessibility**: Scalable inline SVG, generous 44×44px touch targets, visible focus rings, and full keyboard navigation (`Tab` + `Enter`/`Space`).
 
-### 2. 🎵 Lullaby Lab — Original Web Audio Music Box
+### 2. 🗺️ Interactive Dream Delivery Flight Map
+- **Feature**: Pip’s nocturnal flight navigation across five fictional bedtime destinations: **1. Midnight Observatory**, **2. Moonbeam Rooftops**, **3. Badger Hollow**, **4. Owl Perch**, and **5. Cradle of Dreams**.
+- **Vector Skyway**: Smooth curved SVG flight corridor with glowing shimmer effects and an animated starlight skiff.
+- **Storytelling & Dispatch**: Direct destination selection in any order, accessible destination detail panel, "Deliver Dream" starlight dispatch action, and corridor replay/reset.
+- **Accessibility & Motion**: Seamless keyboard navigation, touch targets ≥ 44×44px, and full `prefers-reduced-motion` compliance.
+
+### 3. 🎵 Lullaby Lab — Original Web Audio Music Box
 - **Feature**: A playable music box inside the *Lullaby Lab* card.
 - **Synthesis Engine**: Uses the browser's native **Web Audio API** (zero MP3/WAV dependencies) to synthesize an original, copyright-free 11-note bedtime melody in soothing pentatonic/C-Major.
 - **Timbre**: Blends fundamental bell sine waves with octave shimmer overtones and authentic physical chime decay envelopes.
 - **Inclusive Design**: Features a synchronized chime-pin progression bar displaying active notes (C5, E5, G5, etc.), allowing hearing-impaired or muted visitors to enjoy the melody visually.
 - **Safety**: User-gesture enforced, overlap-free playback, and instant smooth-gain release on Stop or unmount to eliminate speaker clicks.
 
-### 3. 💌 Ephemeral Dream Drop Form
+### 4. 💌 Ephemeral Dream Drop Form
 - **Feature**: An interactive dispatch station where visitors whisper bedtime wishes for sleeping woodland creatures.
 - **Form Controls**: Dream Title (max 60 chars) and Dream Vision (max 240 chars) with live character counters, recipient selector, and inline validation.
 - **Cloud Basket**: Dispatched dreams are nestled into a live local feed.
 - **Privacy & Transparency**: Explicitly notes that dreams are held purely in temporary session memory and gently evaporate on page refresh (no backend, no trackers, no PII).
 
-### 4. 🗝️ The Secret Stargazing Loft (Easter Egg)
+### 5. 🗝️ The Secret Stargazing Loft (Easter Egg)
 - **Feature**: Clicking the brass telescope button in the footer unlocks Pip's hidden sanctuary above Cloud 9 (`SecretObservatoryModal.jsx`).
 - **Interactive Surprise**: An interactive 4-star mini constellation chart of **"The Dream Moon Rabbit"**. Lighting up all 4 stars reveals Pip's secret recipe for *Starlight Moonflower Tea*.
 - **Accessibility**: Full accessible dialog semantics (`role="dialog"`, `aria-modal="true"`), focus trap, Escape key handling, and automatic focus restoration to the trigger button upon dismissal.
 
-### 5. 🎛️ Customizable Ambiance Settings
+### 6. 🎛️ Customizable Ambiance Settings
 - Located in the footer **Observatory Ambiance Settings** bar:
   - **✨ Sparkle Clicks (ON / OFF)**: Spawns gentle radiating starlight sparkles on click/tap without replacing the system cursor. Automatically suppressed on touch devices and under `prefers-reduced-motion`. Persisted in `localStorage`.
   - **🔔 Chimes (ON / MUTED)**: Plays gentle synthesized chimes upon key milestones (discovering the secret loft, completing the constellation, or submitting a dream). Defaults to MUTED.
   - **🌙 Enter Dream Mode**: Top-bar toggle that bathes the observatory in velvety midnight-blue tones.
 
-### 6. 📖 Origin Story Chronicles
+### 7. 📖 Origin Story Chronicles
 - Three short storybook chapters strictly under 150 words each:
   - *Scene 01: The First Star* (76 words)
   - *Scene 02: The Midnight Workshop* (82 words)
@@ -136,6 +142,7 @@ npm run lint
 - [x] Playable Web Audio music box with Play/Stop and note visualizer.
 - [x] Interactive constellation telescope with sequential star linking and reset.
 - [x] Ephemeral session Dream Drop form with live character limits and validation.
+- [x] Interactive Dream Delivery Flight Map with curved SVG route, 5 destinations, and dream parcel dispatch.
 - [x] Hidden observatory Easter egg modal with Moon Rabbit star puzzle and tea recipe.
 - [x] Optional Starlight Sparkles and Interaction Chimes with persistent settings.
 - [x] Responsive layout verified at 320px, 375px, 768px, and desktop widths.

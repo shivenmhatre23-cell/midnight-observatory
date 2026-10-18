@@ -134,6 +134,7 @@ export default function Footer({
                 <li><a href="#hero">Observation Deck</a></li>
                 <li><a href="#about">Custodian Profile</a></li>
                 <li><a href="#showcase">Project Workshop</a></li>
+                <li><a href="#flight-map">Dream Flight Map</a></li>
                 <li><a href="#story">Origin Chronicles</a></li>
                 <li><a href="#attributions">Credits & Art Sources</a></li>
               </ul>
