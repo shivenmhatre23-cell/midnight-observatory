@@ -5729,3 +5729,900 @@ body.dream-mode-active .touch-hint-text {
   }
 }
 
+/* ==========================================================================
+   Graduation Quest, Celestial Companions, & Apprentice Certificate (Tier 3)
+   ========================================================================== */
+
+.graduation-quest-section {
+  padding: 5rem 0 4rem;
+  position: relative;
+  background: linear-gradient(180deg, rgba(253, 246, 237, 0.4) 0%, rgba(247, 234, 226, 0.7) 100%);
+}
+
+body.dream-mode-active .graduation-quest-section {
+  background: linear-gradient(180deg, rgba(16, 20, 38, 0.6) 0%, rgba(22, 26, 48, 0.85) 100%);
+}
+
+.quest-eyebrow-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: rgba(163, 64, 99, 0.1);
+  color: var(--berry);
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 0.75rem;
+  border: 1px solid rgba(163, 64, 99, 0.2);
+}
+
+body.dream-mode-active .quest-eyebrow-badge {
+  background: rgba(243, 201, 107, 0.12);
+  color: var(--dream-gold);
+  border-color: rgba(243, 201, 107, 0.25);
+}
+
+.quest-narrative {
+  max-width: 680px;
+  margin: 0.75rem auto 2.5rem;
+  font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+}
+
+/* Toast Notification for unlocks */
+.quest-unlock-toast {
+  max-width: 620px;
+  margin: 0 auto 2rem;
+  padding: 0.85rem 1.4rem;
+  background: linear-gradient(135deg, rgba(243, 201, 107, 0.95), rgba(254, 243, 199, 0.95));
+  border: 1.5px solid #d4982c;
+  color: #5c3809;
+  border-radius: var(--radius-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 6px 20px rgba(212, 152, 44, 0.25);
+  animation: slideDownFade 0.4s ease-out;
+}
+
+body.dream-mode-active .quest-unlock-toast {
+  background: linear-gradient(135deg, rgba(38, 44, 82, 0.95), rgba(58, 42, 78, 0.95));
+  border-color: var(--dream-gold);
+  color: #fff4d1;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+}
+
+@keyframes slideDownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Quest Tracker Card */
+.quest-tracker-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+  padding: 1.5rem 2rem;
+  margin-bottom: 2.5rem;
+  box-shadow: 0 8px 24px rgba(106, 85, 107, 0.06);
+}
+
+body.dream-mode-active .quest-tracker-card {
+  background: rgba(28, 33, 58, 0.7);
+  border-color: rgba(243, 201, 107, 0.2);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+.tracker-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+
+.tracker-lead {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 1.05rem;
+  color: var(--text-heading);
+}
+
+.tracker-compass-icon {
+  font-size: 1.25rem;
+}
+
+.tracker-title {
+  font-weight: 700;
+}
+
+.tracker-count {
+  color: var(--berry);
+  font-weight: 800;
+}
+
+body.dream-mode-active .tracker-count {
+  color: var(--dream-gold);
+}
+
+.quest-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.9rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+.quest-status-badge.in-progress {
+  background: rgba(163, 64, 99, 0.1);
+  color: var(--berry);
+  border: 1px solid rgba(163, 64, 99, 0.2);
+}
+
+body.dream-mode-active .quest-status-badge.in-progress {
+  background: rgba(158, 197, 254, 0.15);
+  color: #9ec5fe;
+  border-color: rgba(158, 197, 254, 0.3);
+}
+
+.quest-status-badge.graduated {
+  background: linear-gradient(135deg, #f3c96b, #e0a324);
+  color: #3b2203;
+  box-shadow: 0 2px 10px rgba(224, 163, 36, 0.35);
+}
+
+body.dream-mode-active .quest-status-badge.graduated {
+  background: linear-gradient(135deg, #f3c96b, #d4982c);
+  color: #1a1002;
+}
+
+.quest-progress-track {
+  width: 100%;
+  height: 12px;
+  background: rgba(163, 64, 99, 0.08);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+
+body.dream-mode-active .quest-progress-track {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.quest-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #f3c96b 0%, #e88c5d 50%, var(--berry) 100%);
+  border-radius: var(--radius-full);
+  transition: width 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+body.dream-mode-active .quest-progress-fill {
+  background: linear-gradient(90deg, #6ea8fe 0%, #a370f7 50%, var(--dream-gold) 100%);
+}
+
+/* Milestones Grid */
+.quest-milestones-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 4rem;
+}
+
+.milestone-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+}
+
+body.dream-mode-active .milestone-card {
+  background: rgba(28, 33, 58, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.milestone-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 10px 24px rgba(106, 85, 107, 0.1);
+}
+
+body.dream-mode-active .milestone-card:hover {
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
+.milestone-card.completed {
+  border-color: rgba(243, 201, 107, 0.7);
+  box-shadow: 0 4px 18px rgba(243, 201, 107, 0.15);
+}
+
+body.dream-mode-active .milestone-card.completed {
+  border-color: rgba(243, 201, 107, 0.5);
+  box-shadow: 0 4px 18px rgba(243, 201, 107, 0.12);
+}
+
+.milestone-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.1rem;
+}
+
+.milestone-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-full);
+  background: rgba(243, 201, 107, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  border: 1px solid rgba(243, 201, 107, 0.3);
+}
+
+.milestone-pill {
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.7rem;
+  border-radius: var(--radius-full);
+}
+
+.milestone-pill.pending {
+  background: rgba(163, 64, 99, 0.08);
+  color: var(--text-muted);
+}
+
+body.dream-mode-active .milestone-pill.pending {
+  background: rgba(255, 255, 255, 0.08);
+  color: #adb5bd;
+}
+
+.milestone-pill.done {
+  background: rgba(46, 133, 64, 0.12);
+  color: #1f6b31;
+  border: 1px solid rgba(46, 133, 64, 0.25);
+}
+
+body.dream-mode-active .milestone-pill.done {
+  background: rgba(117, 183, 152, 0.2);
+  color: #75b798;
+  border-color: rgba(117, 183, 152, 0.35);
+}
+
+.milestone-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 0.5rem;
+}
+
+.milestone-desc {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.milestone-proof-box {
+  background: rgba(245, 240, 235, 0.7);
+  border-radius: var(--radius-md);
+  padding: 0.75rem 0.9rem;
+  font-size: 0.82rem;
+  margin-bottom: 1.25rem;
+}
+
+body.dream-mode-active .milestone-proof-box {
+  background: rgba(18, 22, 40, 0.6);
+}
+
+.proof-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.proof-content.completed {
+  color: #276738;
+}
+
+body.dream-mode-active .proof-content.completed {
+  color: #75b798;
+}
+
+.proof-content.pending {
+  color: var(--text-muted);
+}
+
+.proof-check {
+  color: #d4982c;
+  font-weight: bold;
+}
+
+.btn-milestone-jump {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  min-height: 44px;
+  padding: 0.6rem 1rem;
+  background: transparent;
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  color: var(--text-heading);
+  font-weight: 700;
+  font-size: 0.88rem;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.btn-milestone-jump:hover {
+  background: rgba(163, 64, 99, 0.08);
+  border-color: var(--berry);
+  color: var(--berry);
+}
+
+.btn-milestone-jump:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+body.dream-mode-active .btn-milestone-jump {
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--cream);
+}
+
+body.dream-mode-active .btn-milestone-jump:hover {
+  background: rgba(243, 201, 107, 0.1);
+  border-color: var(--dream-gold);
+  color: var(--dream-gold);
+}
+
+.btn-arrow {
+  transition: transform 0.2s ease;
+}
+
+/* Feature 2: Celestial Companions Collection Panel */
+.companions-panel {
+  margin-bottom: 4.5rem;
+}
+
+.companions-header {
+  margin-bottom: 2.2rem;
+}
+
+.companions-eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--berry);
+  margin-bottom: 0.35rem;
+}
+
+body.dream-mode-active .companions-eyebrow {
+  color: var(--dream-gold);
+}
+
+.companions-title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  margin-bottom: 0.5rem;
+}
+
+.companions-subtitle {
+  max-width: 640px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.companions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.6rem;
+}
+
+.companion-card {
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-xl);
+  padding: 1.6rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  position: relative;
+}
+
+body.dream-mode-active .companion-card {
+  background: rgba(28, 33, 58, 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.companion-card.unlocked {
+  border-color: var(--companion-accent, rgba(243, 201, 107, 0.5));
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.companion-card.unlocked:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+}
+
+body.dream-mode-active .companion-card.unlocked {
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35);
+}
+
+body.dream-mode-active .companion-card.unlocked:hover {
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.5);
+}
+
+.companion-card.locked {
+  opacity: 0.85;
+}
+
+.companion-visual-box {
+  width: 140px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+  position: relative;
+}
+
+.companion-art-svg {
+  width: 130px;
+  height: 130px;
+  transition: transform 0.3s ease;
+}
+
+.companion-card.unlocked:hover .companion-art-svg {
+  transform: scale(1.05);
+}
+
+.companion-badge-pill {
+  position: absolute;
+  bottom: -4px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+}
+
+body.dream-mode-active .companion-badge-pill {
+  background: rgba(18, 22, 40, 0.9);
+  border-color: rgba(255, 255, 255, 0.15);
+  color: var(--cream);
+}
+
+.companion-body {
+  width: 100%;
+}
+
+.companion-name {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--text-heading);
+  margin-bottom: 0.2rem;
+}
+
+.companion-role {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--berry);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.8rem;
+}
+
+body.dream-mode-active .companion-role {
+  color: var(--dream-gold);
+}
+
+.companion-personality {
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--text-muted);
+  margin-bottom: 0.6rem;
+}
+
+.companion-lore {
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: var(--text-muted);
+  font-style: italic;
+}
+
+.companion-lock-info {
+  background: rgba(245, 240, 235, 0.75);
+  border-radius: var(--radius-md);
+  padding: 0.85rem;
+  margin-top: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  border: 1px dashed var(--border-soft);
+}
+
+body.dream-mode-active .companion-lock-info {
+  background: rgba(18, 22, 40, 0.65);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.lock-icon {
+  font-size: 1.2rem;
+  display: block;
+  margin-bottom: 0.35rem;
+}
+
+.lock-clue {
+  margin: 0;
+  line-height: 1.45;
+}
+
+/* Feature 3: Certificate Generator Card */
+.certificate-section-card {
+  background: var(--bg-card);
+  border: 2px solid rgba(243, 201, 107, 0.4);
+  border-radius: var(--radius-xl);
+  padding: 2.5rem 2.2rem;
+  box-shadow: 0 10px 30px rgba(106, 85, 107, 0.08);
+  position: relative;
+}
+
+body.dream-mode-active .certificate-section-card {
+  background: rgba(26, 31, 56, 0.85);
+  border-color: rgba(243, 201, 107, 0.3);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.certificate-header {
+  margin-bottom: 2rem;
+}
+
+.cert-eyebrow {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--berry);
+  margin-bottom: 0.35rem;
+}
+
+body.dream-mode-active .cert-eyebrow {
+  color: var(--dream-gold);
+}
+
+.cert-title {
+  font-size: 1.85rem;
+  font-weight: 800;
+  color: var(--text-heading);
+  margin-bottom: 0.5rem;
+}
+
+.cert-subtitle {
+  max-width: 660px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  color: var(--text-muted);
+  line-height: 1.55;
+}
+
+.certificate-controls-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.65);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-lg);
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 2rem;
+}
+
+body.dream-mode-active .certificate-controls-bar {
+  background: rgba(18, 22, 40, 0.6);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.nickname-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  flex-grow: 1;
+  max-width: 360px;
+}
+
+.nickname-label {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text-heading);
+}
+
+.nickname-hint {
+  font-size: 0.75rem;
+  font-weight: normal;
+  color: var(--text-muted);
+}
+
+.input-nickname {
+  min-height: 44px;
+  padding: 0.55rem 0.9rem;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-soft);
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-size: 0.95rem;
+  color: var(--text-heading);
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.input-nickname:focus {
+  border-color: var(--berry);
+  box-shadow: 0 0 0 3px rgba(163, 64, 99, 0.18);
+}
+
+body.dream-mode-active .input-nickname {
+  background: rgba(34, 38, 63, 0.8);
+  border-color: rgba(243, 201, 107, 0.25);
+  color: var(--cream);
+}
+
+body.dream-mode-active .input-nickname:focus {
+  border-color: var(--dream-gold);
+  box-shadow: 0 0 0 3px rgba(243, 201, 107, 0.2);
+}
+
+.certificate-status-summary {
+  display: flex;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.summary-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.4rem 0.85rem;
+  background: rgba(243, 201, 107, 0.12);
+  border: 1px solid rgba(243, 201, 107, 0.3);
+  border-radius: var(--radius-full);
+  font-size: 0.82rem;
+  color: var(--text-heading);
+}
+
+body.dream-mode-active .summary-pill {
+  background: rgba(243, 201, 107, 0.1);
+  border-color: rgba(243, 201, 107, 0.25);
+  color: var(--cream);
+}
+
+.pill-dot-gold {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #d4982c;
+}
+
+body.dream-mode-active .pill-dot-gold {
+  background: var(--dream-gold);
+}
+
+/* Canvas Preview */
+.certificate-canvas-wrapper {
+  max-width: 820px;
+  margin: 0 auto 2rem;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.12);
+  border: 1px solid rgba(243, 201, 107, 0.3);
+  background: #0f1325;
+}
+
+.certificate-canvas-preview {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1200 / 840;
+}
+
+/* Actions */
+.certificate-actions-bar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-download-cert {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 52px;
+  padding: 0.85rem 2.2rem;
+  background: linear-gradient(135deg, #f3c96b 0%, #e8a735 100%);
+  color: #3b2203;
+  font-weight: 800;
+  font-size: 1.05rem;
+  border: none;
+  border-radius: var(--radius-full);
+  box-shadow: 0 6px 20px rgba(232, 167, 53, 0.35);
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.btn-download-cert:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 28px rgba(232, 167, 53, 0.45);
+}
+
+.btn-download-cert:active {
+  transform: scale(0.98);
+}
+
+.cert-btn-icon {
+  font-size: 1.3rem;
+}
+
+.cert-feedback {
+  padding: 0.65rem 1.25rem;
+  border-radius: var(--radius-md);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.cert-feedback.success {
+  background: rgba(46, 133, 64, 0.12);
+  color: #1f6b31;
+  border: 1px solid rgba(46, 133, 64, 0.25);
+}
+
+body.dream-mode-active .cert-feedback.success {
+  background: rgba(117, 183, 152, 0.2);
+  color: #75b798;
+}
+
+.cert-feedback.error {
+  background: rgba(186, 45, 45, 0.12);
+  color: #8c2020;
+  border: 1px solid rgba(186, 45, 45, 0.25);
+}
+
+body.dream-mode-active .cert-feedback.error {
+  background: rgba(220, 53, 69, 0.2);
+  color: #ea868f;
+}
+
+.certificate-disclaimer {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  max-width: 580px;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .quest-milestones-grid,
+  .companions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .graduation-quest-section {
+    padding: 3.5rem 0 3rem;
+  }
+
+  .quest-tracker-card {
+    padding: 1.25rem;
+  }
+
+  .tracker-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .quest-milestones-grid,
+  .companions-grid {
+    grid-template-columns: 1fr;
+    gap: 1.2rem;
+  }
+
+  .certificate-section-card {
+    padding: 1.5rem 1.1rem;
+  }
+
+  .certificate-controls-bar {
+    flex-direction: column;
+    align-items: stretch;
+    padding: 1rem;
+  }
+
+  .nickname-input-group {
+    max-width: 100%;
+  }
+
+  .btn-download-cert {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .cert-title {
+    font-size: 1.45rem;
+  }
+
+  .companions-title {
+    font-size: 1.4rem;
+  }
+
+  .milestone-card,
+  .companion-card {
+    padding: 1.25rem;
+  }
+
+  .certificate-status-summary {
+    flex-direction: column;
+    gap: 0.4rem;
+  }
+}
+
+/* Accessibility: prefers-reduced-motion */
+@media (prefers-reduced-motion: reduce) {
+  .quest-unlock-toast {
+    animation: none;
+  }
+  .quest-progress-fill {
+    transition: none;
+  }
+  .milestone-card,
+  .companion-card,
+  .btn-milestone-jump,
+  .btn-download-cert {
+    transition: none;
+    transform: none !important;
+  }
+  .btn-milestone-jump:hover .btn-arrow {
+    transform: none !important;
+  }
+}
+
+

@@ -18,6 +18,7 @@ export default function FallingDreamsGame({
   dreamModeActive = false,
   highScore = 0,
   onHighScoreUpdate,
+  onRoundComplete = null,
 }) {
   const [gameState, setGameState] = useState('idle'); // 'idle' | 'playing' | 'paused' | 'gameover'
   const [score, setScore] = useState(0);
@@ -107,8 +108,11 @@ export default function FallingDreamsGame({
     if (onHighScoreUpdate) {
       onHighScoreUpdate(finalScore);
     }
+    if (onRoundComplete) {
+      onRoundComplete({ score: finalScore, starsCaught: finalCaught });
+    }
     setAccessibleStatus(`Game over! You caught ${finalCaught} dream stars for a total score of ${finalScore}.`);
-  }, [onHighScoreUpdate]);
+  }, [onHighScoreUpdate, onRoundComplete]);
 
   // Pause / Resume Game
   const pauseGame = useCallback(() => {

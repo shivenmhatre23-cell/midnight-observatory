@@ -4,9 +4,21 @@ import ConstellationTelescope from './ConstellationTelescope';
 import NightlightAmbience from './NightlightAmbience';
 import { NIGHTLIGHT_AURAS } from '../data/nightlightAuras';
 
-export default function ProjectShowcase({ onConstellationComplete, dreamModeActive = false }) {
+export default function ProjectShowcase({
+  onConstellationComplete,
+  dreamModeActive = false,
+  onAuraSelect = null,
+}) {
   const [selectedAuraIndex, setSelectedAuraIndex] = useState(0);
   const currentAura = NIGHTLIGHT_AURAS[selectedAuraIndex] || NIGHTLIGHT_AURAS[0];
+
+  const handleAuraChange = (idx) => {
+    setSelectedAuraIndex(idx);
+    const chosen = NIGHTLIGHT_AURAS[idx] || NIGHTLIGHT_AURAS[0];
+    if (onAuraSelect) {
+      onAuraSelect(`${chosen.name} (${chosen.temp})`);
+    }
+  };
 
   const projects = [
     {
@@ -127,7 +139,7 @@ export default function ProjectShowcase({ onConstellationComplete, dreamModeActi
                   {project.id === 'nightlight-collection' && (
                     <NightlightAmbience
                       selectedIndex={selectedAuraIndex}
-                      onSelectAura={setSelectedAuraIndex}
+                      onSelectAura={handleAuraChange}
                       auras={NIGHTLIGHT_AURAS}
                     />
                   )}

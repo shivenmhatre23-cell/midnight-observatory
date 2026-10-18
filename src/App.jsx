@@ -8,10 +8,12 @@ import StoryPreview from './components/StoryPreview';
 import StarlightTelegraph from './components/StarlightTelegraph';
 import DreamDropForm from './components/DreamDropForm';
 import FallingDreamsGame from './components/FallingDreamsGame';
+import GraduationQuest from './components/GraduationQuest';
 import Footer from './components/Footer';
 import SparkleCursor from './components/SparkleCursor';
 import useSoundEffects from './hooks/useSoundEffects';
 import useVisitorLogbook from './hooks/useVisitorLogbook';
+import useGraduationQuest from './hooks/useGraduationQuest';
 import './App.css';
 
 function App() {
@@ -40,6 +42,7 @@ function App() {
   } = useSoundEffects();
 
   const visitorLogbook = useVisitorLogbook();
+  const graduationQuest = useGraduationQuest();
 
   // Defer preloading alternate theme hero asset during browser idle time
   useEffect(() => {
@@ -117,6 +120,7 @@ function App() {
         <ProjectShowcase
           onConstellationComplete={playConstellationSound}
           dreamModeActive={dreamModeActive}
+          onAuraSelect={graduationQuest.recordFavoriteAura}
         />
 
         {/* Dream Delivery Flight Map Section (Phase 7) */}
@@ -124,6 +128,19 @@ function App() {
           soundEnabled={soundEnabled}
           onPlayDeliverySound={playDreamSubmittedSound}
           dreamModeActive={dreamModeActive}
+          onDreamDelivered={graduationQuest.recordDreamDelivery}
+        />
+
+        {/* Junior Dream Engineer Graduation Quest & Sky Companions */}
+        <GraduationQuest
+          questData={graduationQuest.questData}
+          completedMilestonesCount={graduationQuest.completedMilestonesCount}
+          isGraduated={graduationQuest.isGraduated}
+          newlyUnlocked={graduationQuest.newlyUnlocked}
+          onUpdateNickname={graduationQuest.updateNickname}
+          dreamModeActive={dreamModeActive}
+          soundEnabled={soundEnabled}
+          onPlayChime={playConstellationSound}
         />
 
         {/* Origin Story Preview Section */}
@@ -146,7 +163,13 @@ function App() {
           onCatchSound={playCatchSound}
           dreamModeActive={dreamModeActive}
           highScore={visitorLogbook.highScore}
-          onHighScoreUpdate={visitorLogbook.updateHighScore}
+          onHighScoreUpdate={(newScore) => {
+            visitorLogbook.updateHighScore(newScore);
+            graduationQuest.recordGameCompletion(newScore);
+          }}
+          onRoundComplete={({ score }) => {
+            graduationQuest.recordGameCompletion(score);
+          }}
         />
       </main>
 
@@ -160,6 +183,7 @@ function App() {
         soundEnabled={soundEnabled}
         onToggleSound={toggleSound}
         onEasterEggDiscovered={playSecretSound}
+        onSecretPuzzleSolved={graduationQuest.recordEasterEggSolved}
         dreamModeActive={dreamModeActive}
       />
     </div>

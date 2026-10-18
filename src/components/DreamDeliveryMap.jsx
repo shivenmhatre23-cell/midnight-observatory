@@ -95,6 +95,7 @@ const ROUTE_PATH_DATA =
 export default function DreamDeliveryMap({
   soundEnabled = false,
   onPlayDeliverySound,
+  onDreamDelivered = null,
 }) {
   const [activeId, setActiveId] = useState('observatory');
   const [deliveredIds, setDeliveredIds] = useState(['observatory']); // Home base starts visited
@@ -129,6 +130,9 @@ export default function DreamDeliveryMap({
       setDeliveredIds((prev) => (prev.includes(activeId) ? prev : [...prev, activeId]));
       setIsDelivering(false);
       setNotification(`✦ Dream dispatched to ${activeDest.name}! Peaceful slumber has settled.`);
+      if (onDreamDelivered) {
+        onDreamDelivered(activeDest);
+      }
     }, 450);
   };
 
