@@ -695,15 +695,57 @@ body.dream-mode-active .hero-title-accent {
   position: relative;
   z-index: 2;
   border-radius: var(--radius-lg);
-  padding: 1rem;
+  padding: 0.75rem;
   background: radial-gradient(circle at center, rgba(255, 255, 255, 0.7), rgba(254, 247, 230, 0.3));
   box-shadow: 0 20px 40px -10px rgba(92, 64, 51, 0.08);
   border: 1px solid var(--border-gold);
+  cursor: pointer;
+  outline: none;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+  user-select: none;
+  -webkit-user-select: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.character-frame:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 45px -10px rgba(243, 201, 107, 0.25);
+  border-color: rgba(243, 201, 107, 0.75);
+}
+
+.character-frame:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--dream-gold), 0 20px 40px -10px rgba(92, 64, 51, 0.15);
 }
 
 body.dream-mode-active .character-frame {
   background: radial-gradient(circle at center, rgba(46, 52, 84, 0.6), rgba(34, 38, 63, 0.3));
   border-color: rgba(243, 201, 107, 0.4);
+}
+
+body.dream-mode-active .character-frame:hover {
+  box-shadow: 0 24px 45px -10px rgba(0, 0, 0, 0.5);
+  border-color: var(--dream-gold);
+}
+
+body.dream-mode-active .character-frame:focus-visible {
+  box-shadow: 0 0 0 3px var(--dream-gold), 0 20px 40px -10px rgba(0, 0, 0, 0.5);
+}
+
+.character-video {
+  width: 100%;
+  max-width: 480px;
+  height: auto;
+  max-height: 520px;
+  aspect-ratio: 720 / 1280;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+  display: block;
+  filter: drop-shadow(0 15px 25px rgba(34, 38, 63, 0.12));
+  background-color: transparent;
+  pointer-events: none;
 }
 
 .character-image {
@@ -721,6 +763,115 @@ body.dream-mode-active .character-frame {
   100% {
     transform: translateY(-8px);
   }
+}
+
+/* Pip's Living Speech Bubble */
+.pip-speech-bubble {
+  position: absolute;
+  top: -24px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90%;
+  max-width: 330px;
+  background: #fffdf9;
+  border: 1.5px solid var(--dream-gold);
+  border-radius: var(--radius-lg);
+  padding: 0.65rem 2rem 0.65rem 0.95rem;
+  box-shadow: 0 8px 24px rgba(44, 43, 60, 0.12);
+  z-index: 10;
+  animation: speechBubblePop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  text-align: left;
+}
+
+body.dream-mode-active .pip-speech-bubble {
+  background: rgba(28, 34, 60, 0.96);
+  border-color: rgba(243, 201, 107, 0.7);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes speechBubblePop {
+  0% {
+    opacity: 0;
+    transform: translateX(-50%) translateY(8px) scale(0.92);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0) scale(1);
+  }
+}
+
+.speech-bubble-tail {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-top: 8px solid var(--dream-gold);
+}
+
+.speech-bubble-tail::after {
+  content: '';
+  position: absolute;
+  bottom: 2px;
+  left: -7px;
+  width: 0;
+  height: 0;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 7px solid #fffdf9;
+}
+
+body.dream-mode-active .speech-bubble-tail::after {
+  border-top-color: rgba(28, 34, 60, 0.96);
+}
+
+.speech-bubble-text {
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--cocoa);
+  font-weight: 600;
+  margin: 0;
+}
+
+body.dream-mode-active .speech-bubble-text {
+  color: #fff8f1;
+}
+
+.speech-bubble-dismiss {
+  position: absolute;
+  top: 6px;
+  right: 8px;
+  background: transparent;
+  border: none;
+  color: var(--cocoa);
+  opacity: 0.5;
+  font-size: 0.85rem;
+  cursor: pointer;
+  padding: 0.2rem;
+  line-height: 1;
+  border-radius: var(--radius-sm);
+  transition: opacity 0.15s ease, background 0.15s ease;
+}
+
+.speech-bubble-dismiss:hover,
+.speech-bubble-dismiss:focus-visible {
+  opacity: 1;
+  background: rgba(163, 64, 99, 0.1);
+  color: var(--berry);
+  outline: none;
+}
+
+body.dream-mode-active .speech-bubble-dismiss {
+  color: #ebdacf;
+}
+
+body.dream-mode-active .speech-bubble-dismiss:hover,
+body.dream-mode-active .speech-bubble-dismiss:focus-visible {
+  color: var(--dream-gold);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 /* Dream Mode Artwork Smooth Crossfade */
@@ -744,8 +895,12 @@ body.dream-mode-active .character-frame {
 @media (prefers-reduced-motion: reduce) {
   .theme-fade-img,
   .character-image,
-  .character-image.theme-fade-img {
+  .character-image.theme-fade-img,
+  .character-video,
+  .pip-speech-bubble {
     animation: none !important;
+    transform: none !important;
+    transition: none !important;
   }
 }
 
