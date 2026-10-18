@@ -24,7 +24,7 @@ export default function SecretObservatoryModal({
     dreamModeActive ??
     (typeof document !== 'undefined' && document.body.classList.contains('dream-mode-active'));
   const avatarSrc = isDream
-    ? `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.jpg`
+    ? `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.png`
     : `${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`;
 
   // Focus management & Escape key listener

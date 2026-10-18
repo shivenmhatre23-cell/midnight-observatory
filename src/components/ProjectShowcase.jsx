@@ -12,7 +12,7 @@ export default function ProjectShowcase({ onConstellationComplete, dreamModeActi
       description:
         'A soothing music box that designs gentle bedtime melodies. Powered by a hand-carved golden winding key, tiny brass cylinders chime custom frequencies calculated to slow fluttering heartbeats and lull busy minds to sleep.',
       image: dreamModeActive
-        ? `${import.meta.env.BASE_URL}images/pip_lullaby_box_dream_mode.jpg`
+        ? `${import.meta.env.BASE_URL}images/pip_lullaby_box_dream_mode.png`
         : `${import.meta.env.BASE_URL}images/pip_lullaby_box.png`,
       alt: 'The golden Lullaby Lab music box with star chimes and delicate key',
       specs: [
@@ -30,7 +30,7 @@ export default function ProjectShowcase({ onConstellationComplete, dreamModeActi
       description:
         'Cozy lamps and lanterns that turn darkness into comfort. Each lantern captures a fragment of crescent moonlight enclosed in warm blown glass, casting gentle honey-amber auras that soften shadows without disturbing deep sleep.',
       image: dreamModeActive
-        ? `${import.meta.env.BASE_URL}images/pip_dream_lantern_dream_mode.jpg`
+        ? `${import.meta.env.BASE_URL}images/pip_dream_lantern_dream_mode.png`
         : `${import.meta.env.BASE_URL}images/pip_dream_lantern.png`,
       alt: 'A glowing crescent moon dream lantern casting cozy warm light',
       specs: [
