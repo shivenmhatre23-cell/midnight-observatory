@@ -10,6 +10,7 @@ import FallingDreamsGame from './components/FallingDreamsGame';
 import Footer from './components/Footer';
 import SparkleCursor from './components/SparkleCursor';
 import useSoundEffects from './hooks/useSoundEffects';
+import useVisitorLogbook from './hooks/useVisitorLogbook';
 import './App.css';
 
 function App() {
@@ -36,6 +37,8 @@ function App() {
     playDreamSubmittedSound,
     playCatchSound,
   } = useSoundEffects();
+
+  const visitorLogbook = useVisitorLogbook();
 
   // Preload light and dark assets for seamless crossfade
   useEffect(() => {
@@ -98,7 +101,10 @@ function App() {
       {/* Main Content Area */}
       <main>
         {/* Hero Section */}
-        <Hero dreamModeActive={dreamModeActive} />
+        <Hero
+          dreamModeActive={dreamModeActive}
+          visitorLogbook={visitorLogbook}
+        />
 
         {/* Character Introduction Section */}
         <CharacterIntro dreamModeActive={dreamModeActive} />
@@ -127,6 +133,8 @@ function App() {
           soundEnabled={soundEnabled}
           onCatchSound={playCatchSound}
           dreamModeActive={dreamModeActive}
+          highScore={visitorLogbook.highScore}
+          onHighScoreUpdate={visitorLogbook.updateHighScore}
         />
       </main>
 

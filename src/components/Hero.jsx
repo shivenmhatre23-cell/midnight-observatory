@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function Hero({ dreamModeActive = false }) {
+export default function Hero({ dreamModeActive = false, visitorLogbook = null }) {
   const heroImageSrc = dreamModeActive
     ? `${import.meta.env.BASE_URL}images/pip_avatar_cloud_dream_mode.png`
     : `${import.meta.env.BASE_URL}images/pip_avatar_cloud.png`;
@@ -10,6 +10,30 @@ export default function Hero({ dreamModeActive = false }) {
       <div className="container hero-container">
         {/* Content Side */}
         <div className="hero-content">
+          {/* Visitor Memory Greeting Banner */}
+          {visitorLogbook && !visitorLogbook.isDismissed && (
+            <div className="visitor-welcome-banner" role="status" aria-live="polite">
+              <div className="visitor-welcome-content">
+                <span className="visitor-welcome-icon" aria-hidden="true">
+                  {visitorLogbook.isReturning ? '🌟' : '✦'}
+                </span>
+                <div className="visitor-welcome-text">
+                  <strong className="visitor-welcome-title">{visitorLogbook.greetingTitle}</strong>
+                  <span className="visitor-welcome-body"> {visitorLogbook.greetingBody}</span>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="btn-dismiss-greeting"
+                onClick={visitorLogbook.dismissGreeting}
+                aria-label="Dismiss welcome message"
+                title="Dismiss greeting"
+              >
+                ✕
+              </button>
+            </div>
+          )}
+
           <div className="identity-badge">
             <span className="badge-sparkle">✦</span>
             <span className="badge-text">Junior Dream Engineer · Midnight Nursery</span>

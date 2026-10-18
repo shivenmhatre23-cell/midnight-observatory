@@ -16,6 +16,8 @@ export default function FallingDreamsGame({
   soundEnabled = false,
   onCatchSound,
   dreamModeActive = false,
+  highScore = 0,
+  onHighScoreUpdate,
 }) {
   const [gameState, setGameState] = useState('idle'); // 'idle' | 'playing' | 'paused' | 'gameover'
   const [score, setScore] = useState(0);
@@ -102,8 +104,11 @@ export default function FallingDreamsGame({
 
     const finalScore = scoreRef.current;
     const finalCaught = starsCaughtRef.current;
+    if (onHighScoreUpdate) {
+      onHighScoreUpdate(finalScore);
+    }
     setAccessibleStatus(`Game over! You caught ${finalCaught} dream stars for a total score of ${finalScore}.`);
-  }, []);
+  }, [onHighScoreUpdate]);
 
   // Pause / Resume Game
   const pauseGame = useCallback(() => {
@@ -485,6 +490,11 @@ export default function FallingDreamsGame({
             </div>
 
             <div className="game-stat-item">
+              <span className="stat-label">🏆 Best:</span>
+              <strong className="stat-value">{Math.max(highScore, score)}</strong>
+            </div>
+
+            <div className="game-stat-item">
               <span className="stat-label">⏳ Time Left:</span>
               <strong className={`stat-value time-text ${timeLeft <= 5 ? 'time-low' : ''}`}>
                 {timeLeft}s
@@ -635,6 +645,9 @@ export default function FallingDreamsGame({
                   <div className="final-score-badge">
                     <span className="final-score-num">{score} Points</span>
                     <span className="final-caught-num">({starsCaught} Dream Stars Caught)</span>
+                    {score > highScore && score > 0 && (
+                      <span className="new-high-score-tag">🎉 New Personal Best!</span>
+                    )}
                   </div>
                   <div className="rank-award-box">
                     <span className="rank-title">{rank.title}</span>
