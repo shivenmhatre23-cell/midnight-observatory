@@ -7,9 +7,9 @@ const BASKET_WIDTH = 84;
 const BASKET_HEIGHT = 28;
 
 const STAR_TYPES = [
-  { type: 'golden', symbol: '⭐', points: 10, color: '#f3c96b', glow: '#ffeaa7', radius: 14, speed: 1.8 },
-  { type: 'nebula', symbol: '✨', points: 20, color: '#f4d6d7', glow: '#ffb8b8', radius: 16, speed: 2.2 },
-  { type: 'wisp', symbol: '🌸', points: 15, color: '#a34063', glow: '#e84393', radius: 13, speed: 1.5 },
+  { type: 'golden', name: 'Classic Starlight', symbol: '⭐', points: 10, color: '#f3c96b', glow: '#ffeaa7', radius: 14, speed: 1.8 },
+  { type: 'wisp', name: 'Sweet Slumber', symbol: '🌸', points: 15, color: '#a34063', glow: '#e84393', radius: 13, speed: 1.5 },
+  { type: 'nebula', name: 'Lucid Flare', symbol: '✨', points: 20, color: '#f4d6d7', glow: '#ffb8b8', radius: 16, speed: 2.2 },
 ];
 
 export default function FallingDreamsGame({
@@ -92,8 +92,50 @@ export default function FallingDreamsGame({
     }
   }, []);
 
+  // Handle Game Over
+  const handleGameOver = useCallback(() => {
+    setGameState('gameover');
+    if (gameLoopRef.current) cancelAnimationFrame(gameLoopRef.current);
+    if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
+    keysRef.current.left = false;
+    keysRef.current.right = false;
+
+    const finalScore = scoreRef.current;
+    const finalCaught = starsCaughtRef.current;
+    setAccessibleStatus(`Game over! You caught ${finalCaught} dream stars for a total score of ${finalScore}.`);
+  }, []);
+
+  // Pause / Resume Game
+  const pauseGame = useCallback(() => {
+    setGameState((currentState) => {
+      if (currentState === 'playing') {
+        if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
+        if (gameLoopRef.current) cancelAnimationFrame(gameLoopRef.current);
+        keysRef.current.left = false;
+        keysRef.current.right = false;
+        setAccessibleStatus('Game paused. Press Space or P to resume.');
+        return 'paused';
+      } else if (currentState === 'paused') {
+        setAccessibleStatus('Game resumed.');
+        timerIntervalRef.current = setInterval(() => {
+          setTimeLeft((prev) => {
+            if (prev <= 1) {
+              clearInterval(timerIntervalRef.current);
+              handleGameOver();
+              return 0;
+            }
+            return prev - 1;
+          });
+        }, 1000);
+        if (canvasRef.current) canvasRef.current.focus();
+        return 'playing';
+      }
+      return currentState;
+    });
+  }, [handleGameOver]);
+
   // Start / Restart Game
-  const startGame = () => {
+  const startGame = useCallback(() => {
     if (gameLoopRef.current) cancelAnimationFrame(gameLoopRef.current);
     if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
 
@@ -102,6 +144,8 @@ export default function FallingDreamsGame({
     starsRef.current = [];
     particlesRef.current = [];
     spawnTimerRef.current = 0;
+    keysRef.current.left = false;
+    keysRef.current.right = false;
     basketRef.current.x = CANVAS_WIDTH / 2 - BASKET_WIDTH / 2;
     basketRef.current.targetX = CANVAS_WIDTH / 2 - BASKET_WIDTH / 2;
 
@@ -127,40 +171,7 @@ export default function FallingDreamsGame({
     if (canvasRef.current) {
       canvasRef.current.focus();
     }
-  };
-
-  const handleGameOver = () => {
-    setGameState('gameover');
-    if (gameLoopRef.current) cancelAnimationFrame(gameLoopRef.current);
-    if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
-
-    const finalScore = scoreRef.current;
-    const finalCaught = starsCaughtRef.current;
-    setAccessibleStatus(`Game over! You caught ${finalCaught} dream stars for a total score of ${finalScore}.`);
-  };
-
-  const pauseGame = () => {
-    if (gameState === 'playing') {
-      setGameState('paused');
-      if (timerIntervalRef.current) clearInterval(timerIntervalRef.current);
-      if (gameLoopRef.current) cancelAnimationFrame(gameLoopRef.current);
-      setAccessibleStatus('Game paused.');
-    } else if (gameState === 'paused') {
-      setGameState('playing');
-      setAccessibleStatus('Game resumed.');
-      timerIntervalRef.current = setInterval(() => {
-        setTimeLeft((prev) => {
-          if (prev <= 1) {
-            clearInterval(timerIntervalRef.current);
-            handleGameOver();
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
-      if (canvasRef.current) canvasRef.current.focus();
-    }
-  };
+  }, [handleGameOver]);
 
   // Main 60fps Canvas Animation Loop
   useEffect(() => {
@@ -339,29 +350,77 @@ export default function FallingDreamsGame({
     };
   }, [gameState, dreamModeActive, soundEnabled, onCatchSound, spawnStar, spawnCatchParticles]);
 
-  // Keyboard handlers
-  const handleKeyDown = (e) => {
-    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
-      e.preventDefault();
-      keysRef.current.left = true;
-    } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
-      e.preventDefault();
-      keysRef.current.right = true;
-    } else if (e.key === 'p' || e.key === 'P' || e.key === ' ') {
-      if (gameState === 'playing' || gameState === 'paused') {
-        e.preventDefault();
-        pauseGame();
-      }
-    }
-  };
-
-  const handleKeyUp = (e) => {
-    if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+  // Full Keyboard Gameplay Listener on window
+  useEffect(() => {
+    // Only listen when actively playing or paused
+    if (gameState !== 'playing' && gameState !== 'paused') {
       keysRef.current.left = false;
-    } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
       keysRef.current.right = false;
+      return;
     }
-  };
+
+    const isInteractiveInput = (target) => {
+      if (!target || !(target instanceof HTMLElement)) return false;
+      const tag = target.tagName.toLowerCase();
+      if (tag === 'input' || tag === 'textarea' || tag === 'select') return true;
+      if (target.isContentEditable) return true;
+      if ((tag === 'button' || tag === 'a') && !target.closest('.game-card')) return true;
+      return false;
+    };
+
+    const handleGlobalKeyDown = (e) => {
+      if (isInteractiveInput(e.target)) return;
+
+      if (gameState === 'playing') {
+        if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+          e.preventDefault();
+          keysRef.current.left = true;
+        } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+          e.preventDefault();
+          keysRef.current.right = true;
+        } else if (e.key === ' ' || e.key === 'p' || e.key === 'P') {
+          if (e.key === ' ' && e.target?.tagName?.toLowerCase() === 'button') {
+            return;
+          }
+          e.preventDefault();
+          pauseGame();
+        }
+      } else if (gameState === 'paused') {
+        if (e.key === ' ' || e.key === 'p' || e.key === 'P') {
+          if (e.key === ' ' && e.target?.tagName?.toLowerCase() === 'button') {
+            return;
+          }
+          e.preventDefault();
+          pauseGame();
+        }
+      }
+    };
+
+    const handleGlobalKeyUp = (e) => {
+      if (isInteractiveInput(e.target)) return;
+
+      if (e.key === 'ArrowLeft' || e.key === 'a' || e.key === 'A') {
+        keysRef.current.left = false;
+      } else if (e.key === 'ArrowRight' || e.key === 'd' || e.key === 'D') {
+        keysRef.current.right = false;
+      }
+    };
+
+    const handleWindowBlur = () => {
+      keysRef.current.left = false;
+      keysRef.current.right = false;
+    };
+
+    window.addEventListener('keydown', handleGlobalKeyDown);
+    window.addEventListener('keyup', handleGlobalKeyUp);
+    window.addEventListener('blur', handleWindowBlur);
+
+    return () => {
+      window.removeEventListener('keydown', handleGlobalKeyDown);
+      window.removeEventListener('keyup', handleGlobalKeyUp);
+      window.removeEventListener('blur', handleWindowBlur);
+    };
+  }, [gameState, pauseGame]);
 
   // Pointer / Touch move on canvas
   const handlePointerMove = (e) => {
@@ -472,7 +531,7 @@ export default function FallingDreamsGame({
           </div>
 
           {/* Interactive Canvas Area & Overlays */}
-          <div className="game-canvas-wrapper">
+          <div className={`game-canvas-wrapper ${gameState === 'idle' ? 'is-idle' : ''}`}>
             <canvas
               ref={canvasRef}
               width={CANVAS_WIDTH}
@@ -481,8 +540,6 @@ export default function FallingDreamsGame({
               tabIndex={0}
               role="application"
               aria-label="Catch the Falling Dreams play area. Use Left and Right arrow keys or touch to move Pip's basket."
-              onKeyDown={handleKeyDown}
-              onKeyUp={handleKeyUp}
               onPointerMove={handlePointerMove}
               onPointerDown={handlePointerMove}
             />
@@ -490,17 +547,52 @@ export default function FallingDreamsGame({
             {/* Start Screen Overlay */}
             {gameState === 'idle' && (
               <div className="game-overlay start-screen">
-                <div className="overlay-content">
+                <div className="overlay-content start-screen-content">
                   <span className="overlay-icon" aria-hidden="true">🧺</span>
-                  <h3 className="overlay-title">Help Pip Collect Bedtime Dreams</h3>
+                  <h3 className="overlay-title">Catch the Falling Dreams</h3>
                   <p className="overlay-desc">
-                    Catch falling stars (⭐ +10, 🌸 +15, ✨ +20) in Pip’s woven basket. You have 30
-                    seconds to gather as much peaceful slumber as possible!
+                    Help Pip gather falling bedtime dreams in his cloud basket before the <strong>30-second</strong> night watch ends!
                   </p>
 
-                  <div className="game-instructions-row">
-                    <span className="instruction-badge">⌨️ Left / Right Arrow Keys or A / D</span>
-                    <span className="instruction-badge">📱 Touch / Drag anywhere on screen</span>
+                  {/* Pre-Game Instructions & Star Guide Panel */}
+                  <div className="pre-game-instructions-card" aria-label="Game instructions and star point guide">
+                    <div className="instructions-section-tag">
+                      <span aria-hidden="true">✨</span>
+                      <span>Star Types &amp; Point Values</span>
+                    </div>
+
+                    <div className="star-types-grid" role="list" aria-label="Star types and point values">
+                      {STAR_TYPES.map((star) => (
+                        <div key={star.name} className={`star-type-item star-${star.type}`} role="listitem">
+                          <span className="star-type-icon" aria-hidden="true">{star.symbol}</span>
+                          <div className="star-type-meta">
+                            <strong className="star-type-name">{star.name}</strong>
+                            <span className="star-type-points">+{star.points} points</span>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <div className="how-to-play-grid">
+                      <div className="instruction-step">
+                        <span className="step-icon" aria-hidden="true">⌨️</span>
+                        <div className="step-text">
+                          <strong>Move:</strong> <kbd>←</kbd> <kbd>→</kbd> or <kbd>A</kbd> <kbd>D</kbd> keys (or touch &amp; drag on mobile)
+                        </div>
+                      </div>
+                      <div className="instruction-step">
+                        <span className="step-icon" aria-hidden="true">🧺</span>
+                        <div className="step-text">
+                          <strong>Catch:</strong> Slide Pip&apos;s basket under falling stars to score within <strong>30 seconds</strong>
+                        </div>
+                      </div>
+                      <div className="instruction-step">
+                        <span className="step-icon" aria-hidden="true">⏸</span>
+                        <div className="step-text">
+                          <strong>Pause / Resume:</strong> Press <kbd>Space</kbd> or <kbd>P</kbd> at any time during play
+                        </div>
+                      </div>
+                    </div>
                   </div>
 
                   <button
