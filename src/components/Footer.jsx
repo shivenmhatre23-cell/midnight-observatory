@@ -145,6 +145,7 @@ export default function Footer({
               <ul>
                 <li><span>Lullaby Lab v1.0</span></li>
                 <li><span>Nightlight Registry</span></li>
+                <li><a href="#starlight-catcher">Star Catcher Mini-Game</a></li>
                 <li><span>Zephyr Wind Maps</span></li>
                 <li><button type="button" onClick={scrollToTop} className="back-to-top-btn">↑ Back to Stars</button></li>
               </ul>

@@ -6,6 +6,7 @@ import ProjectShowcase from './components/ProjectShowcase';
 import DreamDeliveryMap from './components/DreamDeliveryMap';
 import StoryPreview from './components/StoryPreview';
 import DreamDropForm from './components/DreamDropForm';
+import FallingDreamsGame from './components/FallingDreamsGame';
 import Footer from './components/Footer';
 import SparkleCursor from './components/SparkleCursor';
 import useSoundEffects from './hooks/useSoundEffects';
@@ -33,6 +34,7 @@ function App() {
     playConstellationSound,
     playSecretSound,
     playDreamSubmittedSound,
+    playCatchSound,
   } = useSoundEffects();
 
   // Preload light and dark assets for seamless crossfade
@@ -119,6 +121,13 @@ function App() {
 
         {/* Ephemeral Dream Drop Form Section */}
         <DreamDropForm onDreamSubmitted={playDreamSubmittedSound} />
+
+        {/* Catch the Falling Dreams Mini-Game (Phase 8) */}
+        <FallingDreamsGame
+          soundEnabled={soundEnabled}
+          onCatchSound={playCatchSound}
+          dreamModeActive={dreamModeActive}
+        />
       </main>
 
       {/* Optional Celestial Sparkle Cursor Layer */}

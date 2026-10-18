@@ -55,6 +55,13 @@ Starring **Pip**, the official sleepy, gentle Skull Baby and Junior Dream Engine
   - *Scene 03: The First Dream Delivery* (78 words)
 - Interactive tab switcher with moral takeaway quotes.
 
+### 8. 🎮 Catch the Falling Dreams (Mini-Game)
+- **Feature**: An arcade-style bedtime mini-game where visitors help Pip catch falling dream stars in his woven cloud basket.
+- **Controls**: Full keyboard support (Left/Right Arrow keys or A/D), direct canvas touch/swipe, and on-screen touch buttons for mobile accessibility.
+- **Scoring & Items**: Golden Stars (⭐ +10), Shimmering Wisps (🌸 +15), and Rare Nebula Stars (✨ +20) across a cozy 30-second countdown.
+- **Rankings**: Earn cozy titles (*Master Dream Gatherer*, *Certified Star Scout*, *Gentle Stargazer*) with heartwarming messages from Pip.
+- **Accessibility & Motion**: Zero accidental scrolling (`touch-action: none`), full `prefers-reduced-motion` speed dampening, pause/resume, and procedural audio chimes wired to the site mute toggle.
+
 ---
 
 ## 🎨 Creative Direction & Design Tokens
@@ -143,6 +150,7 @@ npm run lint
 - [x] Interactive constellation telescope with sequential star linking and reset.
 - [x] Ephemeral session Dream Drop form with live character limits and validation.
 - [x] Interactive Dream Delivery Flight Map with curved SVG route, 5 destinations, and dream parcel dispatch.
+- [x] Playable Catch the Falling Dreams arcade mini-game with score rankings and keyboard/touch controls.
 - [x] Hidden observatory Easter egg modal with Moon Rabbit star puzzle and tea recipe.
 - [x] Optional Starlight Sparkles and Interaction Chimes with persistent settings.
 - [x] Responsive layout verified at 320px, 375px, 768px, and desktop widths.

@@ -149,11 +149,41 @@ export default function useSoundEffects() {
     }
   }, [soundEnabled, getAudioContext]);
 
+  // 4. Catch falling dream star ping (gentle high bell chime C6)
+  const playCatchSound = useCallback(() => {
+    if (!soundEnabled) return;
+    const ctx = getAudioContext();
+    if (!ctx) return;
+
+    try {
+      const startTime = ctx.currentTime + 0.01;
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1046.5, startTime); // C6
+      osc.frequency.exponentialRampToValueAtTime(1318.5, startTime + 0.08); // E6
+
+      gain.gain.setValueAtTime(0, startTime);
+      gain.gain.linearRampToValueAtTime(0.08, startTime + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.0001, startTime + 0.22);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+
+      osc.start(startTime);
+      osc.stop(startTime + 0.25);
+    } catch {
+      // Graceful fallback
+    }
+  }, [soundEnabled, getAudioContext]);
+
   return {
     soundEnabled,
     toggleSound,
     playConstellationSound,
     playSecretSound,
     playDreamSubmittedSound,
+    playCatchSound,
   };
 }
