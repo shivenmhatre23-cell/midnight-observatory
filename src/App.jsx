@@ -106,8 +106,6 @@ function App() {
         <Hero
           dreamModeActive={dreamModeActive}
           visitorLogbook={visitorLogbook}
-          soundEnabled={soundEnabled}
-          onPlayReactionSound={playConstellationSound}
         />
 
         {/* Character Introduction Section */}
