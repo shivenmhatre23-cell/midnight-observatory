@@ -38,14 +38,31 @@ export default function GraduationQuest({
   };
 
   // Handle Certificate PNG download
-  const handleDownload = () => {
+  const handleDownload = async () => {
     setDownloadError(null);
     try {
       if (!canvasRef.current) {
         throw new Error('Certificate preview is still rendering. Please try again.');
       }
 
-      downloadCertificatePng(canvasRef.current, questData.apprenticeNickname);
+      if (typeof document !== 'undefined' && document.fonts && document.fonts.ready) {
+        try {
+          await document.fonts.ready;
+        } catch {
+          // Safe fallback if font ready promise rejects
+        }
+      }
+
+      renderCertificateToCanvas(canvasRef.current, {
+        nickname: questData.apprenticeNickname,
+        highScore: questData.highScore,
+        completedMilestonesCount,
+        unlockedCompanions: questData.unlockedCompanions,
+        favoriteAura: questData.favoriteAura,
+        isGraduated,
+      });
+
+      await downloadCertificatePng(canvasRef.current, questData.apprenticeNickname);
       setDownloadSuccess(true);
       setTimeout(() => setDownloadSuccess(false), 4500);
 
@@ -179,7 +196,7 @@ export default function GraduationQuest({
               )}
             </div>
 
-            <a href="#falling-dreams" className="btn-milestone-jump">
+            <a href="#starlight-catcher" className="btn-milestone-jump">
               <span>{questData.milestoneA ? 'Play Again' : 'Catch Dreams'}</span>
               <span className="btn-arrow" aria-hidden="true">→</span>
             </a>
@@ -368,12 +385,131 @@ export default function GraduationQuest({
             </div>
           </div>
 
-          {/* Live Certificate Canvas Preview */}
-          <div className="certificate-canvas-wrapper">
+          {/* Official Premium Certificate Document Preview (CSS Grid & Fantasy Parchment) */}
+          <div className="certificate-document-wrapper" role="region" aria-label="Official Junior Dream Engineer Certificate Document">
+            <div className="certificate-parchment">
+              {/* Corner Star Ornaments */}
+              <div className="cert-corner-star top-left" aria-hidden="true">✦</div>
+              <div className="cert-corner-star top-right" aria-hidden="true">✦</div>
+              <div className="cert-corner-star bottom-left" aria-hidden="true">✦</div>
+              <div className="cert-corner-star bottom-right" aria-hidden="true">✦</div>
+
+              {/* Inner Delicate Border Frame */}
+              <div className="cert-inner-frame">
+                {/* Header Area */}
+                <div className="cert-doc-header text-center">
+                  <span className="cert-doc-eyebrow">MIDNIGHT OBSERVATORY · CLOUD 9 SANCTUARY</span>
+                  <h4 className="cert-doc-main-title">
+                    {isGraduated ? 'JUNIOR DREAM ENGINEER CERTIFICATE' : 'APPRENTICE-IN-TRAINING CERTIFICATE'}
+                  </h4>
+                  <span className="cert-doc-subtitle">Official Accreditation of the Midnight Nursery Guild</span>
+                </div>
+
+                {/* Recipient Area */}
+                <div className="cert-doc-recipient-section text-center">
+                  <p className="cert-doc-witness">This celestial parchment bears witness that</p>
+                  <h3 className="cert-doc-recipient-name">{questData.apprenticeNickname || 'Stargazer'}</h3>
+                  <div className="cert-doc-name-divider" aria-hidden="true" />
+                  <p className="cert-doc-lore">
+                    has explored the cloudways, aided the nocturnal dreamers, and gathered the starlight of Cloud 9.
+                  </p>
+                </div>
+
+                {/* Three Achievement Columns with CSS Grid */}
+                <div className="cert-doc-stats-grid" role="group" aria-label="Certificate Achievement Records">
+                  <div className="cert-doc-stat-col">
+                    <span className="stat-col-heading">STAR HARVEST RECORD</span>
+                    <strong className="stat-col-value">
+                      {questData.highScore > 0 ? `${questData.highScore} Stars` : '0 Stars'}
+                    </strong>
+                    <span className="stat-col-desc">Verified Slumber Catch</span>
+                  </div>
+
+                  <div className="cert-doc-stat-col">
+                    <span className="stat-col-heading">QUEST DISCOVERIES</span>
+                    <strong className="stat-col-value">
+                      {completedMilestonesCount} of 3 Milestones
+                    </strong>
+                    <span className="stat-col-desc">
+                      {isGraduated ? '🌟 Full Graduation Verified' : 'In Active Progress'}
+                    </span>
+                  </div>
+
+                  <div className="cert-doc-stat-col">
+                    <span className="stat-col-heading">FAVORITE BEDSIDE AURA</span>
+                    <strong className="stat-col-value">
+                      {questData.favoriteAura ? questData.favoriteAura.replace(/\(.*\)/, '').trim() : 'Not Yet Recorded'}
+                    </strong>
+                    <span className="stat-col-desc">Calibrated Luminescence</span>
+                  </div>
+                </div>
+
+                {/* Sky Companions Section */}
+                <div className="cert-doc-companions-section" role="group" aria-label="Accredited Sky Companions">
+                  <span className="cert-doc-companions-label">UNLOCKED SKY COMPANIONS</span>
+                  <div className="cert-doc-companions-row">
+                    {COMPANIONS.map((companion) => {
+                      const isUnlocked = questData.unlockedCompanions.includes(companion.id);
+                      return (
+                        <div
+                          key={companion.id}
+                          className={`cert-companion-card ${isUnlocked ? 'unlocked' : 'locked'}`}
+                        >
+                          <div className="cert-comp-icon" aria-hidden="true">
+                            {companion.badgeSymbol}
+                          </div>
+                          <div className="cert-comp-info">
+                            <span className="cert-comp-name">{companion.name}</span>
+                            <span className={`cert-comp-status ${isUnlocked ? 'status-unlocked' : 'status-locked'}`}>
+                              {isUnlocked ? '✦ UNLOCKED' : '🔒 AWAITING DISCOVERY'}
+                            </span>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Lore Tagline */}
+                <p className="cert-doc-tagline text-center">
+                  “I build the dreams you fall asleep inside.”
+                </p>
+
+                {/* Three-Part Balanced Ceremonial Footer */}
+                <div className="cert-doc-footer-row">
+                  <div className="cert-footer-col left">
+                    <span className="footer-col-label">ACCREDITED NIGHT</span>
+                    <span className="footer-col-date">Night of October 19, 2026</span>
+                    <span className="footer-col-code">Registry Code: #OBS-2026-CLOUD9</span>
+                  </div>
+
+                  <div className="cert-footer-col center-seal">
+                    <div className={`cert-wax-seal-badge ${isGraduated ? 'graduated' : 'apprentice'}`} aria-label="Official Cloud 9 Wax Seal">
+                      <div className="seal-outer-ring" />
+                      <div className="seal-inner-ring">
+                        <span className="seal-stars">★ ★ ★</span>
+                        <span className="seal-org">MIDNIGHT NURSERY</span>
+                        <span className="seal-rank">{isGraduated ? 'GRADUATED' : 'APPRENTICE'}</span>
+                        <span className="seal-motto">CLOUD 9 SEAL</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="cert-footer-col right">
+                    <span className="footer-col-label">ACCREDITING ENGINEER</span>
+                    <span className="footer-signature">Pip ✦ Junior Dream Engineer</span>
+                    <span className="footer-col-sub">Midnight Nursery Custodian</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Canvas for 2400x1600 High-Resolution PNG Export */}
             <canvas
               ref={canvasRef}
               className="certificate-canvas-preview"
-              aria-label={`Preview of ${questData.apprenticeNickname}'s Junior Dream Engineer Certificate`}
+              aria-label={`Buffer canvas for ${questData.apprenticeNickname}'s Junior Dream Engineer Certificate`}
+              style={{ display: 'none' }}
             />
           </div>
 
