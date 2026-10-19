@@ -17,7 +17,7 @@ const MELODY = [
 
 const TOTAL_DURATION_MS = 7500;
 
-export default function useMusicBox() {
+export default function useMusicBox({ soundEnabled = true } = {}) {
   const [isPlaying, setIsPlaying] = useState(false);
   const [activeNoteIndex, setActiveNoteIndex] = useState(null);
   const [error, setError] = useState(null);
@@ -63,9 +63,47 @@ export default function useMusicBox() {
     setActiveNoteIndex(null);
   }, []);
 
+  // When sound is muted mid-playback, silence active audio nodes while preserving visual animation
+  useEffect(() => {
+    if (!soundEnabled && isPlaying) {
+      activeNodesRef.current.forEach(({ osc, harmonicOsc, gainNode }) => {
+        try {
+          gainNode.disconnect();
+          osc.stop();
+          harmonicOsc.stop();
+        } catch {
+          // Ignore
+        }
+      });
+      activeNodesRef.current = [];
+    }
+  }, [soundEnabled, isPlaying]);
+
   const play = useCallback(async () => {
     // Prevent overlapping sessions
     if (isPlaying) return;
+
+    // Visual Mode: If global audio is disabled, animate pins silently without Web Audio
+    if (!soundEnabled) {
+      setIsPlaying(true);
+      setError(null);
+      timerHandlesRef.current.forEach((id) => clearTimeout(id));
+      timerHandlesRef.current = [];
+
+      MELODY.forEach((item, index) => {
+        const uiTimer = setTimeout(() => {
+          setActiveNoteIndex(index);
+        }, item.time * 1000);
+        timerHandlesRef.current.push(uiTimer);
+      });
+
+      const finishTimer = setTimeout(() => {
+        setIsPlaying(false);
+        setActiveNoteIndex(null);
+      }, TOTAL_DURATION_MS);
+      timerHandlesRef.current.push(finishTimer);
+      return;
+    }
 
     try {
       const AudioCtxClass = window.AudioContext || window.webkitAudioContext;
@@ -146,7 +184,7 @@ export default function useMusicBox() {
       setIsPlaying(false);
       setActiveNoteIndex(null);
     }
-  }, [isPlaying]);
+  }, [isPlaying, soundEnabled]);
 
   // Clean up on component unmount
   useEffect(() => {

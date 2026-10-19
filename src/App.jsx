@@ -121,6 +121,8 @@ function App() {
           onConstellationComplete={playConstellationSound}
           dreamModeActive={dreamModeActive}
           onAuraSelect={graduationQuest.recordFavoriteAura}
+          soundEnabled={soundEnabled}
+          onToggleSound={toggleSound}
         />
 
         {/* Dream Delivery Flight Map Section (Phase 7) */}

@@ -466,6 +466,13 @@ export default function FallingDreamsGame({
 
   return (
     <section className="mini-game-section" id="starlight-catcher" aria-labelledby="mini-game-heading">
+      {/* Anchor alias so both #starlight-catcher and #falling-dreams work */}
+      <span
+        id="falling-dreams"
+        className="section-anchor-alias"
+        aria-hidden="true"
+        style={{ position: 'absolute', top: 0, left: 0, width: 0, height: 0, pointerEvents: 'none', visibility: 'hidden' }}
+      />
       <div className="container">
         {/* Section Header */}
         <div className="section-header text-center">

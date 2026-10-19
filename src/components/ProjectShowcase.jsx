@@ -8,6 +8,8 @@ export default function ProjectShowcase({
   onConstellationComplete,
   dreamModeActive = false,
   onAuraSelect = null,
+  soundEnabled = false,
+  onToggleSound = null,
 }) {
   const [selectedAuraIndex, setSelectedAuraIndex] = useState(0);
   const currentAura = NIGHTLIGHT_AURAS[selectedAuraIndex] || NIGHTLIGHT_AURAS[0];
@@ -133,7 +135,12 @@ export default function ProjectShowcase({
                   <p className="card-description">{project.description}</p>
 
                   {/* Embed Playable Web Audio Music Box in Lullaby Lab */}
-                  {project.id === 'lullaby-lab' && <LullabyMusicBox />}
+                  {project.id === 'lullaby-lab' && (
+                    <LullabyMusicBox
+                      soundEnabled={soundEnabled}
+                      onToggleSound={onToggleSound}
+                    />
+                  )}
 
                   {/* Embed Nightlight Ambience in Nightlight Collection */}
                   {project.id === 'nightlight-collection' && (
