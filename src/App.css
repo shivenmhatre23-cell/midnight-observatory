@@ -5999,6 +5999,119 @@ body.dream-mode-active .quest-status-badge.graduated {
   color: #1a1002;
 }
 
+.tracker-actions-group {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.tracker-reset-container {
+  display: inline-flex;
+  align-items: center;
+}
+
+.btn-reset-quest {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-full);
+  padding: 0.32rem 0.85rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-reset-quest:hover {
+  background: var(--blush-light);
+  color: var(--berry);
+  border-color: var(--border-accent);
+  transform: translateY(-1px);
+}
+
+body.dream-mode-active .btn-reset-quest {
+  border-color: rgba(243, 201, 107, 0.25);
+  color: var(--text-muted);
+}
+
+body.dream-mode-active .btn-reset-quest:hover {
+  background: rgba(163, 64, 99, 0.25);
+  color: #ffb8b8;
+  border-color: var(--berry);
+}
+
+.reset-confirm-box {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  background: var(--bg-card-subtle);
+  border: 1px solid var(--border-accent);
+  border-radius: var(--radius-full);
+  padding: 0.22rem 0.55rem 0.22rem 0.85rem;
+  font-size: 0.8rem;
+  animation: fadeInReset 0.2s ease-out;
+}
+
+body.dream-mode-active .reset-confirm-box {
+  background: rgba(34, 38, 63, 0.95);
+  border-color: var(--berry);
+}
+
+.reset-confirm-prompt {
+  font-weight: 700;
+  color: var(--text-heading);
+  font-size: 0.8rem;
+}
+
+.reset-confirm-btns {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.btn-confirm-reset {
+  background: var(--berry);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.65rem;
+  font-size: 0.76rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-confirm-reset:hover {
+  background: var(--berry-dark);
+  transform: scale(1.04);
+}
+
+.btn-cancel-reset {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius-full);
+  padding: 0.2rem 0.6rem;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-cancel-reset:hover {
+  color: var(--text-heading);
+  border-color: var(--text-heading);
+}
+
+@keyframes fadeInReset {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
 .quest-progress-track {
   width: 100%;
   height: 12px;

@@ -9,12 +9,14 @@ export default function GraduationQuest({
   isGraduated,
   newlyUnlocked,
   onUpdateNickname,
+  onResetQuest = null,
   soundEnabled = false,
   onPlayChime = null,
 }) {
   const canvasRef = useRef(null);
   const [downloadSuccess, setDownloadSuccess] = useState(false);
   const [downloadError, setDownloadError] = useState(null);
+  const [showResetConfirm, setShowResetConfirm] = useState(false);
 
   const nicknameInputId = useId();
 
@@ -133,15 +135,60 @@ export default function GraduationQuest({
               </strong>
             </div>
 
-            <div className="tracker-badge-status">
-              {isGraduated ? (
-                <span className="quest-status-badge graduated">
-                  🌟 Full Observatory Graduation Achieved!
-                </span>
-              ) : (
-                <span className="quest-status-badge in-progress">
-                  ✦ Apprentice in Training
-                </span>
+            <div className="tracker-actions-group">
+              <div className="tracker-badge-status">
+                {isGraduated ? (
+                  <span className="quest-status-badge graduated">
+                    🌟 Full Observatory Graduation Achieved!
+                  </span>
+                ) : (
+                  <span className="quest-status-badge in-progress">
+                    ✦ Apprentice in Training
+                  </span>
+                )}
+              </div>
+
+              {onResetQuest && (
+                <div className="tracker-reset-container">
+                  {showResetConfirm ? (
+                    <div className="reset-confirm-box" role="dialog" aria-label="Confirm milestone reset">
+                      <span className="reset-confirm-prompt">Reset all milestones?</span>
+                      <div className="reset-confirm-btns">
+                        <button
+                          type="button"
+                          className="btn-confirm-reset"
+                          onClick={() => {
+                            onResetQuest();
+                            setShowResetConfirm(false);
+                            if (soundEnabled && onPlayChime) onPlayChime();
+                          }}
+                          aria-label="Confirm resetting all milestones"
+                        >
+                          Yes, Reset
+                        </button>
+                        <button
+                          type="button"
+                          className="btn-cancel-reset"
+                          onClick={() => setShowResetConfirm(false)}
+                          aria-label="Cancel milestone reset"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      className="btn-reset-quest"
+                      onClick={() => setShowResetConfirm(true)}
+                      title="Reset quest milestones to begin anew"
+                      aria-label="Reset graduation quest milestones"
+                    >
+                      <span className="reset-icon" aria-hidden="true">↺</span>
+                      <span>Reset Milestones</span>
+                    </button>
+                  )}
+                </div>
               )}
             </div>
           </div>

@@ -27,7 +27,20 @@ function safeSetJson(key, data) {
 function getInitialQuestData() {
   const saved = safeGetJson(QUEST_STORAGE_KEY, null);
 
-  // Check existing high score from prior sessions
+  // If previous quest data was saved (including explicitly reset milestones), respect it
+  if (saved !== null) {
+    return {
+      milestoneA: !!saved.milestoneA,
+      milestoneB: !!saved.milestoneB,
+      milestoneC: !!saved.milestoneC,
+      highScore: typeof saved.highScore === 'number' ? saved.highScore : 0,
+      unlockedCompanions: Array.isArray(saved.unlockedCompanions) ? saved.unlockedCompanions : [],
+      favoriteAura: saved.favoriteAura || 'Honey Amber (2200K)',
+      apprenticeNickname: saved.apprenticeNickname || 'Stargazer',
+    };
+  }
+
+  // Check existing high score from prior sessions (only for first-time migration)
   let existingHighScore = 0;
   try {
     const hsVal = parseInt(localStorage.getItem(HIGH_SCORE_KEY) || '0', 10);
@@ -42,25 +55,18 @@ function getInitialQuestData() {
     existingHighScore = Math.max(existingHighScore, visitorLog.highScore);
   }
 
-  // Baseline milestones
-  const milestoneA = !!saved?.milestoneA || existingHighScore > 0;
-  const milestoneB = !!saved?.milestoneB;
-  const milestoneC = !!saved?.milestoneC;
-
-  // Unlocked companions
-  const companions = new Set(saved?.unlockedCompanions || []);
-  if (milestoneB) companions.add('cloud-kitten');
+  const milestoneA = existingHighScore > 0;
+  const companions = new Set();
   if (existingHighScore >= 100) companions.add('golden-badger');
-  if (milestoneC) companions.add('celestial-moth');
 
   return {
     milestoneA,
-    milestoneB,
-    milestoneC,
-    highScore: Math.max(saved?.highScore || 0, existingHighScore),
+    milestoneB: false,
+    milestoneC: false,
+    highScore: existingHighScore,
     unlockedCompanions: Array.from(companions),
-    favoriteAura: saved?.favoriteAura || 'Honey Amber (2200K)',
-    apprenticeNickname: saved?.apprenticeNickname || 'Stargazer',
+    favoriteAura: 'Honey Amber (2200K)',
+    apprenticeNickname: 'Stargazer',
   };
 }
 
@@ -190,6 +196,22 @@ export default function useGraduationQuest() {
 
   const isGraduated = completedMilestonesCount === 3;
 
+  // Reset all quest milestones and sky companions
+  const resetQuest = useCallback(() => {
+    const freshState = {
+      milestoneA: false,
+      milestoneB: false,
+      milestoneC: false,
+      highScore: 0,
+      unlockedCompanions: [],
+      favoriteAura: 'Honey Amber (2200K)',
+      apprenticeNickname: questData.apprenticeNickname || 'Stargazer',
+    };
+    safeSetJson(QUEST_STORAGE_KEY, freshState);
+    setQuestData(freshState);
+    setNewlyUnlocked('Quest milestones have been reset! Begin your adventure anew ✨');
+  }, [questData.apprenticeNickname]);
+
   return {
     questData,
     completedMilestonesCount,
@@ -200,5 +222,6 @@ export default function useGraduationQuest() {
     recordEasterEggSolved,
     recordFavoriteAura,
     updateNickname,
+    resetQuest,
   };
 }

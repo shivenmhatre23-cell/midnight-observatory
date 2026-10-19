@@ -140,6 +140,7 @@ function App() {
           isGraduated={graduationQuest.isGraduated}
           newlyUnlocked={graduationQuest.newlyUnlocked}
           onUpdateNickname={graduationQuest.updateNickname}
+          onResetQuest={graduationQuest.resetQuest}
           dreamModeActive={dreamModeActive}
           soundEnabled={soundEnabled}
           onPlayChime={playConstellationSound}
